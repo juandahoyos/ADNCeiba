@@ -27,11 +27,10 @@ public class Vehiculo implements Serializable {
 	@Column(name = "IdVehiculo", unique = true, nullable = false)
 	private int idVehiculo;
 
-	@Id
+	
 	@Column(name = "Placa")
 	private String placa;
 
-	@Id
 	@Column(name = "Cilindraje")
 	private int cilindraje;
 
