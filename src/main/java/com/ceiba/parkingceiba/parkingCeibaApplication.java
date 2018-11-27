@@ -1,12 +1,12 @@
-package com.ceiba.ADNParkingCeiba;
+package com.ceiba.parkingceiba;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AdnParkingCeibaApplication {
+public class parkingCeibaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AdnParkingCeibaApplication.class, args);
+		SpringApplication.run(parkingCeibaApplication.class, args);
 	}
 }
