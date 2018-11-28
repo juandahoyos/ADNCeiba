@@ -1,4 +1,4 @@
-package com.ceiba.parkingceiba.model;
+package com.ceiba.parkingceiba.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,8 +45,6 @@ public class Parqueadero implements Serializable{
 	public Parqueadero() {
 		super();
 	}
-
-
 
 	public Parqueadero(Date fechaIngreso, Date fechaSalida, boolean estado, int cobro, Vehiculo vehiculo) {
 		super();
