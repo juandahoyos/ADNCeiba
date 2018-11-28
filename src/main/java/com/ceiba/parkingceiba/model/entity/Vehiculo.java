@@ -1,4 +1,4 @@
-package com.ceiba.parkingceiba.model;
+package com.ceiba.parkingceiba.model.entity;
 
 import java.io.Serializable;
 
