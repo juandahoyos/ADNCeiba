@@ -27,7 +27,6 @@ public class Vehiculo implements Serializable {
 	@Column(name = "IdVehiculo", unique = true, nullable = false)
 	private int idVehiculo;
 
-	
 	@Column(name = "Placa")
 	private String placa;
 
