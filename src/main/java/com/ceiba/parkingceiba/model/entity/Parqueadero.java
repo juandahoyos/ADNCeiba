@@ -23,13 +23,13 @@ public class Parqueadero implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "IdParqueadero", unique = true, nullable = false)
+	@Column(name = "id_parqueadero", unique = true, nullable = false)
 	private int idParqueadero;
 
-	@Column(name = "fechaIngreso", nullable = false)
+	@Column(name = "fecha_ingreso", nullable = false)
 	private Date fechaIngreso;
 	
-	@Column(name = "fechaSalida", nullable = false)
+	@Column(name = "fecha_salida", nullable = false)
 	private Date fechaSalida;
 	
 	@Column(name = "estado", nullable = false)
@@ -39,7 +39,7 @@ public class Parqueadero implements Serializable{
 	private int cobro;
 	
 	@ManyToOne
-	@JoinColumn(name = "IdVehiculo", nullable = false, referencedColumnName = "IdVehiculo")
+	@JoinColumn(name = "id_vehiculo", nullable = false, referencedColumnName = "id_vehiculo")
 	private Vehiculo vehiculo;
 
 	public Parqueadero() {

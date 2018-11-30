@@ -1,6 +1,6 @@
 package com.ceiba.parkingceiba.domain;
 
-public interface RestriccionPlaca {
+public interface IRestriccionPlaca {
 
 	public boolean validadSiEsDomingoOLunes();
 }

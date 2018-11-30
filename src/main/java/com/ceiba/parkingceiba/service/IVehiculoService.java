@@ -2,8 +2,8 @@ package com.ceiba.parkingceiba.service;
 
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
 
-public interface VehiculoService {
+public interface IVehiculoService {
 
-	public Vehiculo getVehiculoParquedado(Vehiculo vehiculo);
+	public Vehiculo getVehiculoParqueado(String placa);
 
 }

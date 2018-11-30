@@ -8,6 +8,7 @@ public final class ParametrosGlobalesParqueadero {
 		public static final int MAXIMO_CARROS_PERMITIDOS = 20;
 		public static final int MAXIMO_MOTOS_PERMITIDOS = 10;
 		public static final String RESTIRCCION_PLACA_POR_LETRA_INICIAL = "A";
+		public static final int MILI_SEGUNDOS = 1000 * 60;
 		
 		public static final int VALOR_HORA_CARRO = 1000;
 		public static final int VALOR_DIA_CARRO = 8000;
