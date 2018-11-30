@@ -24,7 +24,7 @@ public class Vehiculo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "IdVehiculo", unique = true, nullable = false)
+	@Column(name = "id_vehiculo", unique = true, nullable = false)
 	private int idVehiculo;
 
 	@Column(name = "Placa")
@@ -34,18 +34,18 @@ public class Vehiculo implements Serializable {
 	private int cilindraje;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "TipoVehiculo", nullable = false)
-	private EnumTipoVehiculo enumTipoVehiculo;
+	@Column(name = "tipo_vehiculo", nullable = false)
+	private EnumTipoVehiculo tipoVehiculo;
 
 	public Vehiculo() {
 		super();
 	}
 
-	public Vehiculo(String placa, int cilindraje, EnumTipoVehiculo enumTipoVehiculo) {
+	public Vehiculo(String placa, int cilindraje, EnumTipoVehiculo tipoVehiculo) {
 		super();
 		this.placa = placa;
 		this.cilindraje = cilindraje;
-		this.enumTipoVehiculo = enumTipoVehiculo;
+		this.tipoVehiculo = tipoVehiculo;
 	}
 
 	public int getIdVehiculo() {
@@ -68,12 +68,12 @@ public class Vehiculo implements Serializable {
 		this.cilindraje = cilindraje;
 	}
 
-	public EnumTipoVehiculo getEnumTipoVehiculo() {
-		return enumTipoVehiculo;
+	public EnumTipoVehiculo getTipoVehiculo() {
+		return tipoVehiculo;
 	}
 
-	public void setEnumTipoVehiculo(EnumTipoVehiculo enumTipoVehiculo) {
-		this.enumTipoVehiculo = enumTipoVehiculo;
+	public void setEnumTipoVehiculo(EnumTipoVehiculo tipoVehiculo) {
+		this.tipoVehiculo = tipoVehiculo;
 	}
 
 }

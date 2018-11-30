@@ -1,29 +1,19 @@
 package com.ceiba.parkingceiba.domain.imp;
 
-public class TiempoEstacionamientoImp {
+import java.util.Calendar;
+import java.util.Date;
 
-	private int dias;
-	private int horas;
+import org.springframework.stereotype.Component;
 
-	public TiempoEstacionamientoImp(int dias, int horas) {
-		super();
-		this.dias = dias;
-		this.horas = horas;
-	}
+import com.ceiba.parkingceiba.domain.ITiempoEstacionamiento;
+import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
 
-	public int getDias() {
-		return dias;
-	}
+@Component
+public class TiempoEstacionamientoImp implements ITiempoEstacionamiento{
 
-	public void setDias(int dias) {
-		this.dias = dias;
-	}
-
-	public int getHoras() {
-		return horas;
-	}
-
-	public void setHoras(int horas) {
-		this.horas = horas;
+	@Override
+	public int getObtenerMinutosDeParqueo(Date fechaIngreso) {
+		Date fechaSalida = Calendar.getInstance().getTime();
+		return (int) ((fechaSalida.getTime() - fechaIngreso.getTime()) / ParametrosGlobalesParqueadero.MILI_SEGUNDOS);
 	}
 }

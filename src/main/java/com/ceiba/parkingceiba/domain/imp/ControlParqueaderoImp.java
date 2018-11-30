@@ -3,18 +3,20 @@ package com.ceiba.parkingceiba.domain.imp;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.ceiba.parkingceiba.domain.ControlParqueadero;
-import com.ceiba.parkingceiba.model.dao.ParqueaderoDao;
+import com.ceiba.parkingceiba.domain.IControlParqueadero;
 import com.ceiba.parkingceiba.model.entity.Parqueadero;
+import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
 
-public class ControlParqueaderoImp implements ControlParqueadero {
+@Service
+public class ControlParqueaderoImp implements IControlParqueadero {
 	
 	@Autowired
 	public ParqueaderoDao parqueaderoDao;
-
+	
 	@Override
 	public boolean validaPlacaIniciaPorLetraA(String placa) {
 		return placa.startsWith(ParametrosGlobalesParqueadero.RESTIRCCION_PLACA_POR_LETRA_INICIAL);
@@ -22,29 +24,21 @@ public class ControlParqueaderoImp implements ControlParqueadero {
 
 	@Override
 	public boolean validaEspacioPorTipoVehiculo(EnumTipoVehiculo tipoVehiculo) {
-		int vehiculosEnParqueadero = parqueaderoDao.buscarTodosLosVehiculosEnParqueadero(tipoVehiculo);
-		int maximoVehiculosPermitidos = (tipoVehiculo == EnumTipoVehiculo.CARRO ? ParametrosGlobalesParqueadero.MAXIMO_CARROS_PERMITIDOS : ParametrosGlobalesParqueadero.MAXIMO_MOTOS_PERMITIDOS);
-		
-		return vehiculosEnParqueadero < maximoVehiculosPermitidos;
+		return false;
 	}
 
 	@Override
 	public boolean validaVehiculoEstacionado(String placa) {
-		return parqueaderoDao.vehiculoEstacionado(placa);
+		return false;
 	}
 
 	@Override
 	public boolean validaSiPaqueaderoEstaVacio() {
-		return parqueaderoDao.parqueaderoVacio();
+		return false;
 	}
 
 	@Override
-	public Parqueadero getParqueaderoParaAsignar(String placa) {
-		return parqueaderoDao.buscarVehiculoEstacionadoPorPlaca(placa);
-	}
-
-	@Override
-	public int generarCobro(EnumTipoVehiculo enumTipoVehiculo, Date fechaIngreso, Date fechaSalida, int cilindraje) {
+	public int generarCobro(EnumTipoVehiculo tipoVehiculo, Date fechaIngreso, Date fechaSalida, int cilindraje) {
 		
 		return 0;
 	}

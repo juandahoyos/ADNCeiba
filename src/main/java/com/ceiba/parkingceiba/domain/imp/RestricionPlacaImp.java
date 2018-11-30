@@ -4,10 +4,10 @@ import java.util.Calendar;
 
 import org.springframework.stereotype.Component;
 
-import com.ceiba.parkingceiba.domain.RestriccionPlaca;
+import com.ceiba.parkingceiba.domain.IRestriccionPlaca;
 
 @Component
-public class RestricionPlacaImp implements RestriccionPlaca {
+public class RestricionPlacaImp implements IRestriccionPlaca {
 
 	public boolean validadSiEsDomingoOLunes() {
 		return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) < 2;
