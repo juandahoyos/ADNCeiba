@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class Parqueadero implements Serializable{
 	@Column(name = "cobro", nullable = false)
 	private int cobro;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_vehiculo", nullable = false, referencedColumnName = "id_vehiculo")
 	private Vehiculo vehiculo;
 

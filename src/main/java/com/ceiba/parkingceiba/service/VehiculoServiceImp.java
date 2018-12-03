@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ceiba.parkingceiba.dto.VehiculoDTO;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.repository.VehiculoDao;
 
@@ -16,13 +15,12 @@ public class VehiculoServiceImp implements IVehiculoService{
 	
 	@Override
 	@Transactional
-	public Vehiculo getVehiculoParqueado(String placa) {
-		/*if(!vehiculoDao.placaExiste(vehiculoDTO.getPlaca())) {
-			vehiculoDTO = vehiculoDao.save(vehiculoDTO);
+	public Vehiculo getVehiculoParqueado(Vehiculo vehiculo) {
+		if(!vehiculoDao.existePlaca(vehiculo.getPlaca())) {
+			vehiculo = vehiculoDao.save(vehiculo);
 		}else {
-			vehiculoDTO = vehiculoDao.getVehiculoPorPlaca(vehiculoDTO.getPlaca());
-		}*/
-		return null;
+			vehiculo = vehiculoDao.getVehiculoPorPlaca(vehiculo.getPlaca());
+		}
+		return vehiculo;
 	}
-		
 }
