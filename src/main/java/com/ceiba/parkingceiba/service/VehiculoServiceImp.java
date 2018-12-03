@@ -8,18 +8,18 @@ import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.repository.VehiculoDao;
 
 @Service
-public class VehiculoServiceImp implements IVehiculoService{
-	
+public class VehiculoServiceImp implements IVehiculoService {
+
 	@Autowired
 	private VehiculoDao vehiculoDao;
-	
+
 	@Override
 	@Transactional
-	public Vehiculo getVehiculoParqueado(Vehiculo vehiculo) {
-		if(!vehiculoDao.existePlaca(vehiculo.getPlaca())) {
+	public Vehiculo getVehiculoAParquear(Vehiculo vehiculo) {
+		if (!vehiculoDao.existsByPlaca(vehiculo.getPlaca())) {
 			vehiculo = vehiculoDao.save(vehiculo);
-		}else {
-			vehiculo = vehiculoDao.getVehiculoPorPlaca(vehiculo.getPlaca());
+		} else {
+			vehiculo = vehiculoDao.findByPlaca(vehiculo.getPlaca());
 		}
 		return vehiculo;
 	}

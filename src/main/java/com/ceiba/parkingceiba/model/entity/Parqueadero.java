@@ -30,7 +30,7 @@ public class Parqueadero implements Serializable{
 	@Column(name = "fecha_ingreso", nullable = false)
 	private Date fechaIngreso;
 	
-	@Column(name = "fecha_salida", nullable = false)
+	@Column(name = "fecha_salida", nullable = true)
 	private Date fechaSalida;
 	
 	@Column(name = "estado", nullable = false)
@@ -39,8 +39,8 @@ public class Parqueadero implements Serializable{
 	@Column(name = "cobro", nullable = false)
 	private int cobro;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_vehiculo", nullable = false, referencedColumnName = "id_vehiculo")
+	@ManyToOne
+	@JoinColumn(name = "id_vehiculo", nullable = false)
 	private Vehiculo vehiculo;
 
 	public Parqueadero() {

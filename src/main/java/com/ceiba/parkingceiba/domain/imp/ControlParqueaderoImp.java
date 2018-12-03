@@ -49,17 +49,23 @@ public class ControlParqueaderoImp implements IControlParqueadero {
 	}
 	
 	@Override
-	public int generarCobro(EnumTipoVehiculo tipoVehiculo, Date fechaIngreso, Date fechaSalida, int cilindraje) {
-		
-		return 0;
-	}
-
-	@Override
 	public int calcularCobro(Date fechaIngreso, Date fechaSalida, int valorDia, int valorHora) {
 		int cobro = 0;
 		TiempoParqueaderoImp tiempoParqueaderoImp = controlParqueaderoImp.obtenerTiempoDeParqueo(controlParqueaderoImp.getObtenerMinutosDeParqueo(fechaIngreso, fechaSalida));
 		cobro = (tiempoParqueaderoImp.getDias() * valorDia) + (tiempoParqueaderoImp.getHoras() * valorHora);
 		return cobro;
 	}
-
+	
+	@Override
+	public int generarCobro(EnumTipoVehiculo tipoVehiculo, Date fechaIngreso, Date fechaSalida, int cilindraje) {
+		int cobro = 0;
+		
+		if(tipoVehiculo.equals(EnumTipoVehiculo.MOTO)) {
+			cobro = calcularCobro(fechaIngreso, fechaSalida, ParametrosGlobalesParqueadero.VALOR_DIA_MOTO, ParametrosGlobalesParqueadero.VALOR_HORA_MOTO);
+			cobro += cilindraje > ParametrosGlobalesParqueadero.VALOR_MOTOS_CILINDRAJE_550CC ? ParametrosGlobalesParqueadero.VALOR_RECARGO_MOTOS_CILINDRAJE_MAYOR_550CC :0;
+		}else if(tipoVehiculo.equals(EnumTipoVehiculo.CARRO)){
+			cobro = calcularCobro(fechaIngreso, fechaSalida, ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO);
+		}
+		return cobro;
+	}
 }
