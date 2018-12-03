@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -44,13 +42,22 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 	
 	@Override
 	public void registroVehiculo(VehiculoDTO vehiculoDTO) throws ParqueaderoErrorBuilderException{
+		if(!restriccionPlaca.validadSiEsDomingoOLunes() && controlParqueadero.validarPlacaIniciaPorLetraA(vehiculoDTO.getPlaca())){
+			throw new ParqueaderoErrorBuilderException(CatalogoMensajes.PLACA_INVALIDA_PARA_INGRESO, HttpStatus.NOT_ACCEPTABLE);
+		}
+		if(!controlParqueadero.buscarEspacioPorTipoVehiculo(vehiculoDTO.getTipoVehiculo())) {
+			throw new ParqueaderoErrorBuilderException(CatalogoMensajes.NO_HAY_ESPACIO_PARA_EL_TIPO_DE_VEHICULO, HttpStatus.NOT_ACCEPTABLE);
+		}
+		if(controlParqueadero.buscarVehiculoEstacionado(vehiculoDTO.getPlaca())){
+			throw new ParqueaderoErrorBuilderException(CatalogoMensajes.VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, HttpStatus.NOT_ACCEPTABLE);
+		}
 			Vehiculo vehiculo = new Vehiculo(vehiculoDTO.getPlaca(), vehiculoDTO.getCilindraje(), vehiculoDTO.getTipoVehiculo());
 			vehiculoDao.save(vehiculo);
 	}
 
 	@Override
 	public Parqueadero salidaVehiculo(String placa) throws ParqueaderoErrorBuilderException {
-		if(!controlParqueadero.validaVehiculoEstacionado(placa)) {
+		if(!controlParqueadero.buscarVehiculoEstacionado(placa)) {
 		throw new ParqueaderoErrorBuilderException(CatalogoMensajes.VEHICULO_NO_ESTA_ESTACIONADO, HttpStatus.NOT_ACCEPTABLE);
 		}
 		
@@ -66,6 +73,6 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 	}
 
 	public List<Parqueadero> buscarVehiculos() throws ParqueaderoErrorBuilderException{
-		return (List<Parqueadero>) parqueaderoDao.findAll();
+		return (List<Parqueadero>) parqueaderoDao.findByEstado(true);
  }
 }

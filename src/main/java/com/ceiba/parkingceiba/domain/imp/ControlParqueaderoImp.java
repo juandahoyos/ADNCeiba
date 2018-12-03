@@ -18,25 +18,33 @@ public class ControlParqueaderoImp implements IControlParqueadero {
 	public ParqueaderoDao parqueaderoDao;
 	
 	@Override
-	public boolean validaPlacaIniciaPorLetraA(String placa) {
-		return placa.startsWith(ParametrosGlobalesParqueadero.RESTIRCCION_PLACA_POR_LETRA_INICIAL);
+	public boolean validarPlacaIniciaPorLetraA(String placa) {
+		return placa.startsWith(ParametrosGlobalesParqueadero.RESTRICCION_PLACA_POR_LETRA_INICIAL);
 	}
 
 	@Override
-	public boolean validaEspacioPorTipoVehiculo(EnumTipoVehiculo tipoVehiculo) {
-		return false;
+	public boolean buscarEspacioPorTipoVehiculo(EnumTipoVehiculo tipoVehiculo) {
+		int vehiculosEnParqueadero = parqueaderoDao.buscarEspacioPorTipoVehiculo(tipoVehiculo);
+		int maximoVehiculosEnParqueadero = (tipoVehiculo == EnumTipoVehiculo.CARRO ? ParametrosGlobalesParqueadero.MAXIMO_CARROS_PERMITIDOS : ParametrosGlobalesParqueadero.MAXIMO_MOTOS_PERMITIDOS);
+		
+		return vehiculosEnParqueadero < maximoVehiculosEnParqueadero;
 	}
 
 	@Override
-	public boolean validaVehiculoEstacionado(String placa) {
-		return false;
+	public boolean validarSiPaqueaderoEstaVacio() {
+		return parqueaderoDao.paqueaderoVacio();
 	}
 
 	@Override
-	public boolean validaSiPaqueaderoEstaVacio() {
-		return false;
+	public boolean buscarVehiculoEstacionado(String placa) {
+		return parqueaderoDao.buscarVehiculoYaEstacionado(placa);
 	}
-
+	
+	@Override
+	public Parqueadero getObtenerParqueaderoParaAsignar(String placa) {
+		return parqueaderoDao.encontrarVehiculoEnParqueadero(placa);
+	}
+	
 	@Override
 	public int generarCobro(EnumTipoVehiculo tipoVehiculo, Date fechaIngreso, Date fechaSalida, int cilindraje) {
 		
