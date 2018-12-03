@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ceiba.parkingceiba.dto.VehiculoDTO;
 import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 
@@ -25,23 +24,19 @@ public class ParqueaderoServiceImp implements IParqueaderoService{
 
 	@Override
 	public Parqueadero getParqueaderoParaAsignar(String placa) {
-		return null;
+		return parqueaderoDao.encontrarVehiculoEnParqueadero(placa);
 	}
 
 	@Override
 	public List<Parqueadero> encontrarTodosLosParqueaderos() {
-		return null;
-	}
-
-	@Override
-	public Parqueadero configuraIngresoParqueadero(Parqueadero parqueadero, VehiculoDTO vehiculoDTO) {
-		return null;
+		return parqueaderoDao.findByEstado(true);
 	}
 
 	@Override
 	@Transactional
 	public Parqueadero asignarParqueaderoPorId(Parqueadero parqueadero, Date fechaSalida, int cobro) {
-		parqueadero.setFechaSalida(fechaSalida); 
+		
+		parqueadero.setFechaSalida(fechaSalida);
 		parqueadero.setCobro(cobro);
 		parqueadero.setEstado(false);
 		
@@ -49,5 +44,4 @@ public class ParqueaderoServiceImp implements IParqueaderoService{
 		
 		return parqueadero;
 	}
-
 }
