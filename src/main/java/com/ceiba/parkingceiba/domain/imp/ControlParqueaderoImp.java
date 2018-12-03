@@ -17,6 +17,9 @@ public class ControlParqueaderoImp implements IControlParqueadero {
 	@Autowired
 	public ParqueaderoDao parqueaderoDao;
 	
+	@Autowired
+	public CronometroParqueaderoImp controlParqueaderoImp;
+	
 	@Override
 	public boolean validarPlacaIniciaPorLetraA(String placa) {
 		return placa.startsWith(ParametrosGlobalesParqueadero.RESTRICCION_PLACA_POR_LETRA_INICIAL);
@@ -52,9 +55,11 @@ public class ControlParqueaderoImp implements IControlParqueadero {
 	}
 
 	@Override
-	public int calcularCobro(Date fechaIngreso, Date fechaSalida, int valorDia, int valorhora) {
-		
-		return 0;
+	public int calcularCobro(Date fechaIngreso, Date fechaSalida, int valorDia, int valorHora) {
+		int cobro = 0;
+		TiempoParqueaderoImp tiempoParqueaderoImp = controlParqueaderoImp.obtenerTiempoDeParqueo(controlParqueaderoImp.getObtenerMinutosDeParqueo(fechaIngreso, fechaSalida));
+		cobro = (tiempoParqueaderoImp.getDias() * valorDia) + (tiempoParqueaderoImp.getHoras() * valorHora);
+		return cobro;
 	}
 
 }

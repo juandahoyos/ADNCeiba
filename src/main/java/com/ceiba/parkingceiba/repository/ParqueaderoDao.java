@@ -19,8 +19,8 @@ public interface ParqueaderoDao extends CrudRepository<Parqueadero, Long>{
 			+ "WHERE v.tipo_vehiculo = v.tipo_vehiculo AND p.estado = true", nativeQuery = true)
 	 int buscarEspacioPorTipoVehiculo(@Param("tipoVehiculo") EnumTipoVehiculo tipoVehiculo);
 	
-	@Query(value = "SELECT Count(*) >0 FROM parqueadero p Inner Join Vehiculo v On p.id_vehiculo = v.id_vehiculo "
-			+ "WHERE v.placa = v.placa AND p.estado = true", nativeQuery = true)
+	@Query(value = "SELECT case when count(*)>0 then 'true' else 'false' end As x FROM parqueadero p Inner Join Vehiculo v On p.id_vehiculo = v.id_vehiculo " 
+			+ "WHERE v.placa = :placa AND p.estado = true", nativeQuery = true)
 	 boolean buscarVehiculoYaEstacionado(@Param("placa") String placa);
 	
 	@Query(value = "SELECT Count(*) <=0 FROM parqueadero p Inner JOIN vehiculo v On p.id_vehiculo=v.id_vehiculo" 

@@ -10,7 +10,7 @@ import com.ceiba.parkingceiba.domain.IRestriccionPlaca;
 public class RestricionPlacaImp implements IRestriccionPlaca {
 
 	public boolean validadSiEsDomingoOLunes() {
-		return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY ||
+		return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ||
 				Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY;
 	}
 }
