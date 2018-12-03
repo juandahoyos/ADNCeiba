@@ -14,5 +14,5 @@ public interface IControlParqueadero {
 	
 	public Parqueadero getObtenerParqueaderoParaAsignar(String placa);
 	public int generarCobro (EnumTipoVehiculo tipoVehiculo, Date fechaIngreso, Date fechaSalida, int cilindraje);
-	public int calcularCobro(Date fechaIngreso, Date fechaSalida, int valorDia, int valorhora);
+	public int calcularCobro(Date fechaIngreso, Date fechaSalida, int valorDia, int valorHora);
 }
