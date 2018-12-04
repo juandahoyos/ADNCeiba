@@ -25,11 +25,10 @@ public class ControlParqueaderoTest {
 	@Test
 	public void validaPlacaIniciaConLetraATest() {
 	//Arrange
-		//Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca("ASD451").build();
+
 	//Act
-		boolean placa = controlParqueadero.validarPlacaIniciaPorLetraA(PLACA_INICIA_CON_A);
+
 	//Assert
-		assertTrue(placa);
 	}
 	
 	@Test
