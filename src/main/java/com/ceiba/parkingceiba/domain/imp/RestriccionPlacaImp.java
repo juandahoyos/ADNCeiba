@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import com.ceiba.parkingceiba.domain.IRestriccionPlaca;
 
 @Component
-public class RestricionPlacaImp implements IRestriccionPlaca {
+public class RestriccionPlacaImp implements IRestriccionPlaca {
 
 	public boolean validadSiEsDomingoOLunes() {
-		return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ||
-				Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY;
+		return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY || 
+				Calendar.getInstance().get(Calendar.DAY_OF_WEEK)== Calendar.SUNDAY;
 	}
 }

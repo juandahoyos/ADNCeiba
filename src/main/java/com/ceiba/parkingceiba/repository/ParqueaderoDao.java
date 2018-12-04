@@ -23,8 +23,7 @@ public interface ParqueaderoDao extends CrudRepository<Parqueadero, Long>{
 			+ "WHERE v.placa = :placa AND p.estado = true")
 	 boolean buscarVehiculoYaEstacionado(@Param("placa") String placa);
 	
-	@Query(value = "SELECT Count(*) <=0 FROM parqueadero p Inner JOIN vehiculo v On p.id_vehiculo=v.id_vehiculo" 
-			+ "WHERE p.estado = true", nativeQuery = true)
+	@Query("SELECT CASE WHEN COUNT(p) <= 0 THEN true ELSE false END FROM Parqueadero p JOIN p.vehiculo v WHERE p.estado = true")
 	 boolean paqueaderoVacio();
 	
 	@Query("FROM Parqueadero p JOIN p.vehiculo v WHERE v.placa = :placa AND p.estado = true")

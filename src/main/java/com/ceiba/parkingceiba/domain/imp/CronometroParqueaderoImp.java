@@ -18,7 +18,7 @@ public class CronometroParqueaderoImp implements ICronometroParqueadero {
 
 		int dias = (minutosParqueo / 60) / 24;
 		int horas = (minutosParqueo / 60) % 24;
-		int minutos = (minutosParqueo % 60);
+		int minutos = minutosParqueo % 60;
 
 		if (horas > ParametrosGlobalesParqueadero.NUMERO_HORAS_PARA_COBRO_DIA) {
 			dias++;
