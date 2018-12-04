@@ -1,4 +1,4 @@
-package com.ceiba.parkingCeiba;
+package com.ceiba.parkingceiba;
 
 import org.junit.Test;
 
