@@ -41,8 +41,8 @@ public class ControlParqueaderoTest {
 	@Autowired
 	private IControlParqueadero controlParqueadero;
 	
-	/*@MockBean
-	private ParqueaderoDao parqueaderoDao;*/
+	@MockBean
+	private ParqueaderoDao parqueaderoDao;
 	
 	@Test
 	public void validaPlacaIniciaConLetraATest() {
@@ -64,7 +64,7 @@ public class ControlParqueaderoTest {
 		assertFalse(respuesta);
 	}
 	
-	/*@Test
+	@Test
 	public void espacioDisponibleParaCarroTest() {
 	//Arrange
 		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(ParametrosGlobalesParqueadero.MAXIMO_CARROS_PERMITIDOS - 2);
@@ -112,5 +112,5 @@ public class ControlParqueaderoTest {
 		respuesta = controlParqueadero.validarSiPaqueaderoEstaVacio();
 		//Assert
 		assertTrue(respuesta);
-	}*/
+	}
 }
