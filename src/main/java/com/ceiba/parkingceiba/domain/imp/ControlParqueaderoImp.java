@@ -45,7 +45,7 @@ public class ControlParqueaderoImp implements IControlParqueadero {
 	
 	@Override
 	public Parqueadero getObtenerParqueaderoParaAsignar(String placa) {
-		return parqueaderoDao.encontrarVehiculoEnParqueadero(placa);
+		return parqueaderoDao.encontrarVehiculoEnParqueaderoPorPlaca(placa);
 	}
 	
 	@Override
