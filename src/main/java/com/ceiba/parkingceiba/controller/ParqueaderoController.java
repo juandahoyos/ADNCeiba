@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +40,7 @@ public class ParqueaderoController {
 
 	
 	@Produces(MediaType.APPLICATION_JSON)
-	@RequestMapping(value = "/registroSalida/{placa}", method = RequestMethod.PUT)
+	@PutMapping(value = "/registroSalida/{placa}")
 	public ResponseEntity<Object> salidaVehiculo(@PathVariable("placa") String placa) throws ParqueaderoErrorBuilderException {
 		
 		Parqueadero parking = controlParqueaderoService.salidaVehiculo(placa);

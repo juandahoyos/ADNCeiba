@@ -3,7 +3,6 @@ package com.ceiba.parkingceiba.unit;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ceiba.parkingceiba.domain.IControlParqueadero;
-import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
@@ -35,6 +32,8 @@ public class ControlParqueaderoTest {
 
 	private static final String PLACA_INICIA_CON_A = "ASD451";
 	private static final String PLACA_NO_INICIA_CON_A = "BUY987";
+	private static final String PLACA_ESTACIONADA = "TSG541";
+	private static final String PLACA_NO_ESTACIONADA = "PLJ458";
 	
 	public boolean respuesta;
 	
@@ -112,5 +111,25 @@ public class ControlParqueaderoTest {
 		respuesta = controlParqueadero.validarSiPaqueaderoEstaVacio();
 		//Assert
 		assertTrue(respuesta);
+	}
+	
+	@Test
+	public void validaVehiculoParqueadoTest() {
+		//Arrange
+		Mockito.when(parqueaderoDao.buscarVehiculoYaEstacionado(PLACA_ESTACIONADA)).thenReturn(true);
+		//Act
+		respuesta = controlParqueadero.buscarVehiculoEstacionado(PLACA_ESTACIONADA);
+		//Assert
+		assertTrue(respuesta);
+	}
+	
+	@Test
+	public void validaVehiculoNoParqueadoTest() {
+		//Arrange
+		Mockito.when(parqueaderoDao.buscarVehiculoYaEstacionado(PLACA_ESTACIONADA)).thenReturn(false);
+		//Act
+		respuesta = controlParqueadero.buscarVehiculoEstacionado(PLACA_ESTACIONADA);
+		//Assert
+		assertFalse(respuesta);
 	}
 }
