@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +25,7 @@ import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureTestDatabase
 public class ControlParqueaderoTest {
 	
 	@org.junit.Before
