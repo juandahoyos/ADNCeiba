@@ -26,7 +26,7 @@ public class ControlParqueaderoTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	private static final String PLACA_INICIA_CON_A = "aSD451";
+	private static final String PLACA_INICIA_CON_A = "ASD451";
 	private static final String PLACA_NO_INICIA_CON_A = "BUY987";
 	
 	public boolean respuesta;
