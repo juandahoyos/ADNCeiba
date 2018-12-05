@@ -22,7 +22,7 @@ public class ControlParqueaderoImp implements IControlParqueadero {
 	
 	@Override
 	public boolean validarPlacaIniciaPorLetraA(String placa) {
-		return placa.startsWith(ParametrosGlobalesParqueadero.RESTRICCION_PLACA_POR_LETRA_INICIAL);
+		return placa.startsWith("A")|| placa.startsWith("a");
 	}
 
 	@Override
