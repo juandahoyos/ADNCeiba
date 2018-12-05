@@ -2,6 +2,7 @@ package com.ceiba.parkingceiba.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,5 +68,13 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 		cobro = controlParqueadero.generarCobro(parqueadero.getVehiculo().getTipoVehiculo(), parqueadero.getFechaIngreso(), fechaSalida, parqueadero.getVehiculo().getCilindraje());
 		
 		return parqueaderoService.asignarParqueaderoPorId(parqueadero, fechaSalida, cobro);
+	}
+
+	@Override
+	public List<Parqueadero> consultarTodosLosVehiculos() throws ParqueaderoErrorBuilderException {
+		if(controlParqueadero.validarSiPaqueaderoEstaVacio()) {
+			throw new ParqueaderoErrorBuilderException(CatalogoMensajes.PARQUEADERO_ESTA_VACIO, HttpStatus.NOT_ACCEPTABLE);
+		}
+		return parqueaderoService.encontrarTodosLosParqueaderos();
 	}
 }
