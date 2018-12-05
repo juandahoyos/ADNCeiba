@@ -1,8 +1,12 @@
 package com.ceiba.parkingceiba.unit;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +19,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ceiba.parkingceiba.domain.IControlParqueadero;
+import com.ceiba.parkingceiba.domain.ICronometroParqueadero;
+import com.ceiba.parkingceiba.domain.imp.CronometroParqueaderoImp;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
@@ -34,6 +40,10 @@ public class ControlParqueaderoTest {
 	private static final String PLACA_NO_INICIA_CON_A = "BUY987";
 	private static final String PLACA_ESTACIONADA = "TSG541";
 	private static final String PLACA_NO_ESTACIONADA = "PLJ458";
+	
+	private static final int MAS_HORAS_EN_PARQUEADERO = 11;
+	private static final int PAGO_ESPERADO_PARA_CARRO = 8000;
+	private static final int CILINDRAJE_CARRO = 1200;
 	
 	public boolean respuesta;
 	
@@ -126,10 +136,27 @@ public class ControlParqueaderoTest {
 	@Test
 	public void validaVehiculoNoParqueadoTest() {
 		//Arrange
-		Mockito.when(parqueaderoDao.buscarVehiculoYaEstacionado(PLACA_ESTACIONADA)).thenReturn(false);
+		Mockito.when(parqueaderoDao.buscarVehiculoYaEstacionado(PLACA_NO_ESTACIONADA)).thenReturn(false);
 		//Act
-		respuesta = controlParqueadero.buscarVehiculoEstacionado(PLACA_ESTACIONADA);
+		respuesta = controlParqueadero.buscarVehiculoEstacionado(PLACA_NO_ESTACIONADA);
 		//Assert
 		assertFalse(respuesta);
+	}
+	
+	@Test
+	public void calcularCobro() {
+		IControlParqueadero spycontrolParqueadero = Mockito.spy(controlParqueadero);
+		int cobro = 0;
+		
+		Calendar calendar = Calendar.getInstance();
+		Date fechaIngreso = calendar.getTime();
+		
+		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
+		Date fechaSalida = calendar.getTime();
+		
+		Mockito.when(spycontrolParqueadero.calcularCobro(fechaIngreso, fechaSalida, ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO)).thenReturn(PAGO_ESPERADO_PARA_CARRO);
+		cobro = controlParqueadero.generarCobro(EnumTipoVehiculo.CARRO, fechaIngreso, fechaSalida, CILINDRAJE_CARRO);
+		
+		assertEquals(PAGO_ESPERADO_PARA_CARRO, cobro);
 	}
 }
