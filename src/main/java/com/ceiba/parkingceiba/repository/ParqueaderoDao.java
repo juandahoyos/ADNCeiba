@@ -27,5 +27,5 @@ public interface ParqueaderoDao extends CrudRepository<Parqueadero, Long>{
 	 boolean paqueaderoVacio();
 	
 	@Query("FROM Parqueadero p JOIN p.vehiculo v WHERE v.placa = :placa AND p.estado = true")
-	 Parqueadero encontrarVehiculoEnParqueadero(@Param("placa") String placa);
+	 Parqueadero encontrarVehiculoEnParqueaderoPorPlaca(@Param("placa") String placa);
 }

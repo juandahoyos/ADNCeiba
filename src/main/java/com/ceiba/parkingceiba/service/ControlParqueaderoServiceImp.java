@@ -33,8 +33,18 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 	
 	@Autowired
 	public VehiculoDao vehiculoDao;
-
 	
+	
+	public ControlParqueaderoServiceImp(IControlParqueadero controlParqueadero, IRestriccionPlaca restriccionPlaca,
+			IParqueaderoService parqueaderoService, IVehiculoService vehiculoService, VehiculoDao vehiculoDao) {
+		super();
+		this.controlParqueadero = controlParqueadero;
+		this.restriccionPlaca = restriccionPlaca;
+		this.parqueaderoService = parqueaderoService;
+		this.vehiculoService = vehiculoService;
+		this.vehiculoDao = vehiculoDao;
+	}
+
 	@Override
 	public void registroVehiculo(Vehiculo vehiculo) throws ParqueaderoErrorBuilderException{
 		if(!restriccionPlaca.validadSiEsDomingoOLunes() && controlParqueadero.validarPlacaIniciaPorLetraA(vehiculo.getPlaca())){
