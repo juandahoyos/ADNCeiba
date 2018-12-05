@@ -27,13 +27,13 @@ import com.ceiba.parkingceiba.domain.imp.TiempoParqueaderoImp;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
-
+import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureTestDatabase
 public class ControlParqueaderoTest {
-	
+
 	@org.junit.Before
 	public void inicializarMocks() {
 		MockitoAnnotations.initMocks(this);
@@ -43,160 +43,190 @@ public class ControlParqueaderoTest {
 	private static final String PLACA_NO_INICIA_CON_A = "BUY987";
 	private static final String PLACA_ESTACIONADA = "TSG541";
 	private static final String PLACA_NO_ESTACIONADA = "PLJ458";
-	
+
 	private static final int MAS_HORAS_EN_PARQUEADERO = 11;
 	private static final int CILINDRAJE_CARRO = 1200;
 	private static final int PAGO_ESPERADO_PARA_CARRO = 8000;
 	private static final int CILINDRAJE_MOTO = 125;
 	private static final int PAGO_ESPERADO_PARA_MOTO = 4000;
+	private static final int CILINDRAJE_MOTO_550CC = 900;
+	private static final int PAGO_ESPERADO_PARA_MOTO_550CC = 6000;
 
-	
 	public boolean respuesta;
-	
+
 	@Autowired
 	private IControlParqueadero controlParqueadero;
-	
+
 	@MockBean
 	private ParqueaderoDao parqueaderoDao;
-	
+
 	@Test
 	public void validaPlacaIniciaConLetraATest() {
-	//Arrange
-		
-	//Act
+		// Arrange
+
+		// Act
 		respuesta = controlParqueadero.validarPlacaIniciaPorLetraA(PLACA_INICIA_CON_A);
-	//Assert
+		// Assert
 		assertTrue(respuesta);
 	}
-	
+
 	@Test
 	public void validaPlacaNoIniciaConLetraATest() {
-	//Arrange
-		
-	//Act
+		// Arrange
+
+		// Act
 		respuesta = controlParqueadero.validarPlacaIniciaPorLetraA(PLACA_NO_INICIA_CON_A);
-	//Assert
+		// Assert
 		assertFalse(respuesta);
 	}
-	
+
 	@Test
 	public void espacioDisponibleParaCarroTest() {
-	//Arrange
-		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(ParametrosGlobalesParqueadero.MAXIMO_CARROS_PERMITIDOS - 2);
-	//Act
+		// Arrange
+		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO))
+				.thenReturn(ParametrosGlobalesParqueadero.MAXIMO_CARROS_PERMITIDOS - 2);
+		// Act
 		respuesta = controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO);
-	//Assert
+		// Assert
 		assertTrue(respuesta);
 	}
-	
+
 	@Test
 	public void espacioDisponibleParaMotoTest() {
-	//Arrange
-		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.MOTO)).thenReturn(ParametrosGlobalesParqueadero.MAXIMO_MOTOS_PERMITIDOS - 2);
-	//Act
+		// Arrange
+		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.MOTO))
+				.thenReturn(ParametrosGlobalesParqueadero.MAXIMO_MOTOS_PERMITIDOS - 2);
+		// Act
 		respuesta = controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.MOTO);
-	//Assert
+		// Assert
 		assertTrue(respuesta);
 	}
-	
+
 	@Test
 	public void sinEspacioDisponibleParaCarroTest() {
-	//Arrange
-		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(ParametrosGlobalesParqueadero.MAXIMO_CARROS_PERMITIDOS + 2);
-	//Act
+		// Arrange
+		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO))
+				.thenReturn(ParametrosGlobalesParqueadero.MAXIMO_CARROS_PERMITIDOS + 2);
+		// Act
 		respuesta = controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO);
-	//Assert
+		// Assert
 		assertFalse(respuesta);
 	}
-	
+
 	@Test
 	public void sinEspacioDisponibleParaMotoTest() {
-	//Arrange
-		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.MOTO)).thenReturn(ParametrosGlobalesParqueadero.MAXIMO_MOTOS_PERMITIDOS + 2);
-	//Act
+		// Arrange
+		Mockito.when(parqueaderoDao.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.MOTO))
+				.thenReturn(ParametrosGlobalesParqueadero.MAXIMO_MOTOS_PERMITIDOS + 2);
+		// Act
 		respuesta = controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.MOTO);
-	//Assert
+		// Assert
 		assertFalse(respuesta);
 	}
-	
+
 	@Test
 	public void parqueaderoVacioTest() {
-		//Arrange
+		// Arrange
 		Mockito.when(parqueaderoDao.paqueaderoVacio()).thenReturn(true);
-		//Act
+		// Act
 		respuesta = controlParqueadero.validarSiPaqueaderoEstaVacio();
-		//Assert
+		// Assert
 		assertTrue(respuesta);
 	}
-	
+
 	@Test
 	public void validaVehiculoParqueadoTest() {
-		//Arrange
+		// Arrange
 		Mockito.when(parqueaderoDao.buscarVehiculoYaEstacionado(PLACA_ESTACIONADA)).thenReturn(true);
-		//Act
+		// Act
 		respuesta = controlParqueadero.buscarVehiculoEstacionado(PLACA_ESTACIONADA);
-		//Assert
+		// Assert
 		assertTrue(respuesta);
 	}
-	
+
 	@Test
 	public void validaVehiculoNoParqueadoTest() {
-		//Arrange
+		// Arrange
 		Mockito.when(parqueaderoDao.buscarVehiculoYaEstacionado(PLACA_NO_ESTACIONADA)).thenReturn(false);
-		//Act
+		// Act
 		respuesta = controlParqueadero.buscarVehiculoEstacionado(PLACA_NO_ESTACIONADA);
-		//Assert
+		// Assert
 		assertFalse(respuesta);
 	}
-	
+
 	@Test
-	public void calcularCobro() {
+	public void calcularCobroTest() {
 		ICronometroParqueadero cronometroParqueadero = mock(ICronometroParqueadero.class);
 		int cobro = 0;
-		
+
 		Calendar calendar = Calendar.getInstance();
 		Date fechaIngreso = calendar.getTime();
-		
+
 		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
-		
+
 		Mockito.when(cronometroParqueadero.obtenerTiempoDeParqueo(540)).thenReturn(new TiempoParqueaderoImp(1, 1));
-		cobro = controlParqueadero.calcularCobro(fechaIngreso, fechaSalida, ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO);
-		
+		cobro = controlParqueadero.calcularCobro(fechaIngreso, fechaSalida,
+				ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO);
+
 		assertEquals(PAGO_ESPERADO_PARA_CARRO, cobro);
 	}
-	
+
 	@Test
-	public void calcularCobroParaCarro() {
+	public void calcularCobroParaCarroTest() {
 		IControlParqueadero spycontrolParqueadero = Mockito.spy(controlParqueadero);
 		int cobro = 0;
-		
+
 		Calendar calendar = Calendar.getInstance();
 		Date fechaIngreso = calendar.getTime();
-		
+
 		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
-		
-		Mockito.when(spycontrolParqueadero.calcularCobro(fechaIngreso, fechaSalida, ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO)).thenReturn(PAGO_ESPERADO_PARA_CARRO);
+
+		Mockito.when(spycontrolParqueadero.calcularCobro(fechaIngreso, fechaSalida,
+				ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO))
+				.thenReturn(PAGO_ESPERADO_PARA_CARRO);
 		cobro = controlParqueadero.generarCobro(EnumTipoVehiculo.CARRO, fechaIngreso, fechaSalida, CILINDRAJE_CARRO);
-		
+
 		assertEquals(PAGO_ESPERADO_PARA_CARRO, cobro);
 	}
-	
+
 	@Test
-	public void calcularCobroParaMoto() {
+	public void calcularCobroParaMotoTest() {
 		IControlParqueadero spycontrolParqueadero = Mockito.spy(controlParqueadero);
 		int cobro = 0;
-		
+
 		Calendar calendar = Calendar.getInstance();
 		Date fechaIngreso = calendar.getTime();
-		
+
 		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
-		
-		Mockito.when(spycontrolParqueadero.calcularCobro(fechaIngreso, fechaSalida, ParametrosGlobalesParqueadero.VALOR_DIA_MOTO, ParametrosGlobalesParqueadero.VALOR_HORA_MOTO)).thenReturn(PAGO_ESPERADO_PARA_MOTO);
+
+		Mockito.when(spycontrolParqueadero.calcularCobro(fechaIngreso, fechaSalida,
+				ParametrosGlobalesParqueadero.VALOR_DIA_MOTO, ParametrosGlobalesParqueadero.VALOR_HORA_MOTO))
+				.thenReturn(PAGO_ESPERADO_PARA_MOTO);
 		cobro = controlParqueadero.generarCobro(EnumTipoVehiculo.MOTO, fechaIngreso, fechaSalida, CILINDRAJE_MOTO);
-		
+
 		assertEquals(PAGO_ESPERADO_PARA_MOTO, cobro);
+	}
+
+	@Test
+	public void calcularCobroParaMoto550CC() {
+		IControlParqueadero spyControlParqueadero = Mockito.spy(controlParqueadero);
+		int cobro = 0;
+
+		Calendar calendar = Calendar.getInstance();
+		Date fechaIngreso = calendar.getTime();
+
+		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
+		Date fechaSalida = calendar.getTime();
+
+		Mockito.when(spyControlParqueadero.calcularCobro(fechaIngreso, fechaSalida,
+				ParametrosGlobalesParqueadero.VALOR_DIA_MOTO, ParametrosGlobalesParqueadero.VALOR_HORA_MOTO))
+				.thenReturn(PAGO_ESPERADO_PARA_MOTO_550CC);
+		cobro = controlParqueadero.generarCobro(EnumTipoVehiculo.MOTO, fechaIngreso, fechaSalida,
+				CILINDRAJE_MOTO_550CC);
+
+		assertEquals(PAGO_ESPERADO_PARA_MOTO_550CC, cobro);
 	}
 }
