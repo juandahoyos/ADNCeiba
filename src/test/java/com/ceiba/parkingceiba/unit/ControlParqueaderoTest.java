@@ -21,7 +21,7 @@ import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
 @SpringBootTest
 public class ControlParqueaderoTest {
 	
-	/*@org.junit.Before
+	@org.junit.Before
 	public void inicializarMocks() {
 		MockitoAnnotations.initMocks(this);
 	}
@@ -75,5 +75,5 @@ public class ControlParqueaderoTest {
 		respuesta = controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.MOTO);
 	//Assert
 		assertTrue(respuesta);
-	}*/
+	}
 }
