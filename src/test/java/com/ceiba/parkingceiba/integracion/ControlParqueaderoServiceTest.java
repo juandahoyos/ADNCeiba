@@ -58,16 +58,74 @@ public class ControlParqueaderoServiceTest {
 	private static final String DIA_VALIDO = "";
 
 	@Test
-	public void registrarVehiculoTest() {
+	public void registrarVehiculoPlacaIniciaPorLetraAYDiaEsDomingoOLunesTest() {
 		try {
 
-			Vehiculo vehiculo = new Vehiculo("GSD471", 0, EnumTipoVehiculo.CARRO);
+			Vehiculo vehiculo = new Vehiculo("ASD471", 0, EnumTipoVehiculo.CARRO);
 			
 			control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao)); 
 			Mockito.when(restriccionPlaca.validadSiEsDomingoOLunes()).thenReturn(true);
-			Mockito.when(controlParqueadero.validarPlacaIniciaPorLetraA("GSD471")).thenReturn(true);
+			Mockito.when(controlParqueadero.validarPlacaIniciaPorLetraA("ASD471")).thenReturn(true);
 			Mockito.when(controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(true);
-			Mockito.when(controlParqueadero.buscarVehiculoEstacionado("ASD471")).thenReturn(false);
+			Mockito.when(controlParqueadero.buscarVehiculoEstacionado("GGB471")).thenReturn(false);
+			control.registroVehiculo(vehiculo);
+
+		} catch (ParqueaderoErrorBuilderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void registrarVehiculoPlacaIniciaPorLetraAYDiaNoEsDomingoOLunesTest() {
+		try {
+
+			Vehiculo vehiculo = new Vehiculo("ASD471", 0, EnumTipoVehiculo.CARRO);
+			
+			control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao)); 
+			Mockito.when(restriccionPlaca.validadSiEsDomingoOLunes()).thenReturn(false);
+			Mockito.when(controlParqueadero.validarPlacaIniciaPorLetraA("ASD471")).thenReturn(false);
+			Mockito.when(controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(true);
+			Mockito.when(controlParqueadero.buscarVehiculoEstacionado("GGB471")).thenReturn(false);
+			control.registroVehiculo(vehiculo);
+
+		} catch (ParqueaderoErrorBuilderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void registrarVehiculoPlacaNoIniciaConLetraAYDiaEsDomingoOLunesTest() {
+		try {
+
+			Vehiculo vehiculo = new Vehiculo("BNM101", 0, EnumTipoVehiculo.CARRO);
+			
+			control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao)); 
+			Mockito.when(restriccionPlaca.validadSiEsDomingoOLunes()).thenReturn(true);
+			Mockito.when(controlParqueadero.validarPlacaIniciaPorLetraA("BNM101")).thenReturn(false);
+			Mockito.when(controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(true);
+			Mockito.when(controlParqueadero.buscarVehiculoEstacionado("GGB471")).thenReturn(false);
+			control.registroVehiculo(vehiculo);
+
+		} catch (ParqueaderoErrorBuilderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void registrarVehiculoPlacaNoIniciaConLetraAYDiaNoEsDomingoOLunesTest() {
+		try {
+
+			Vehiculo vehiculo = new Vehiculo("BNM101", 0, EnumTipoVehiculo.CARRO);
+			
+			control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao)); 
+			Mockito.when(restriccionPlaca.validadSiEsDomingoOLunes()).thenReturn(false);
+			Mockito.when(controlParqueadero.validarPlacaIniciaPorLetraA("BNM101")).thenReturn(false);
+			Mockito.when(controlParqueadero.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(true);
+			Mockito.when(controlParqueadero.buscarVehiculoEstacionado("GGB471")).thenReturn(false);
 			control.registroVehiculo(vehiculo);
 
 		} catch (ParqueaderoErrorBuilderException e) {
