@@ -60,7 +60,7 @@ public class ControlParqueaderoServiceTest {
 
 	private static final String DIA_VALIDO = "";
 
-	@Test
+	/*@Test
 	public void registrarVehiculoPlacaIniciaPorLetraAYDiaEsDomingoOLunesTest() {
 		try {
 			//Arrange
@@ -90,7 +90,7 @@ public class ControlParqueaderoServiceTest {
 			
 			//Act
 			//Parqueadero parqueadero = control.registroVehiculo(vehiculo);
-			ControlParqueaderoServiceImp cImp = new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao); 
+			/*ControlParqueaderoServiceImp cImp = new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao); 
 			Parqueadero parqueadero = cImp.registroVehiculo(vehiculo);
 			
 			assertNotNull(parqueadero);
@@ -99,7 +99,7 @@ public class ControlParqueaderoServiceTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	@Test
 	public void registrarVehiculoPlacaIniciaPorLetraAYDiaNoEsDomingoOLunesTest() {
