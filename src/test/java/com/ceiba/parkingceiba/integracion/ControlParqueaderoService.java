@@ -17,9 +17,6 @@ import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.testdatabuilder.VehiculoTestDataBuilder;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 
-import co.com.parqueadero.mensajes.Mensajes;
-import co.com.parqueaderoadn.tesbuilder.VehiculoTestBuilder;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
