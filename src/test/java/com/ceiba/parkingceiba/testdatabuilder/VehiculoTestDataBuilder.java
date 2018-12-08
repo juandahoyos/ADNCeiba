@@ -12,7 +12,7 @@ public class VehiculoTestDataBuilder {
 	private String placa;
 	private int cilindraje;
 	private EnumTipoVehiculo tipoVehiculo;
-	
+
 	
 	public VehiculoTestDataBuilder() {
 		super();

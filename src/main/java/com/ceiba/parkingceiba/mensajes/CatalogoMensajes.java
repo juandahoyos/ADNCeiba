@@ -9,5 +9,6 @@ public class CatalogoMensajes {
 	public static final String VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO = "El vehiculo que intenta estacionar ya se encuentra dentro del parqueadero.";
 	public static final String VEHICULO_NO_ESTA_ESTACIONADO = "El vehiculo que indica no se encuentra dentro del parqueadero.";
 	public static final String PARQUEADERO_ESTA_VACIO = "El parqueadero se encuentra vacio.";
+	public static final String INGRESO_VEHICULO_DIFERENTE_A_CARRO_O_MOTO = "Este tipo de vehiculo no puede ingresar al parqueadero";
 
 }

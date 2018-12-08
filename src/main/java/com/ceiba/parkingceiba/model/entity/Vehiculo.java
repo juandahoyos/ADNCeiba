@@ -75,5 +75,4 @@ public class Vehiculo implements Serializable {
 	public void setEnumTipoVehiculo(EnumTipoVehiculo tipoVehiculo) {
 		this.tipoVehiculo = tipoVehiculo;
 	}
-
 }

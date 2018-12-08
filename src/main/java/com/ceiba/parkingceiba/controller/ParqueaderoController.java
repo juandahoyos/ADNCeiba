@@ -35,7 +35,7 @@ public class ParqueaderoController {
 		} catch (ParqueaderoErrorBuilderException e) {
 			return new ResponseEntity<Object>(e, HttpStatus.NOT_ACCEPTABLE);
 		}
-		return new ResponseEntity<>(vehiculo, HttpStatus.OK);
+		return new ResponseEntity<>(vehiculo, HttpStatus.CREATED);
 	}
 
 	
