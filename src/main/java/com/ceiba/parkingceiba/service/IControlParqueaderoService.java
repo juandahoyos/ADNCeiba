@@ -8,7 +8,7 @@ import com.ceiba.parkingceiba.model.entity.Vehiculo;
 
 public interface IControlParqueaderoService {
 
-	public void registroVehiculo(Vehiculo vehiculo) throws ParqueaderoErrorBuilderException;
+	public Parqueadero registroVehiculo(Vehiculo vehiculo) throws ParqueaderoErrorBuilderException;
 	public Parqueadero salidaVehiculo(String placa) throws ParqueaderoErrorBuilderException;
 	public List<Parqueadero> consultarTodosLosVehiculos() throws ParqueaderoErrorBuilderException;
 }

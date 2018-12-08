@@ -46,7 +46,7 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 	}
 
 	@Override
-	public void registroVehiculo(Vehiculo vehiculo) throws ParqueaderoErrorBuilderException{
+	public Parqueadero registroVehiculo(Vehiculo vehiculo) throws ParqueaderoErrorBuilderException{
 		if(!restriccionPlaca.validadSiEsDomingoOLunes() && controlParqueadero.validarPlacaIniciaPorLetraA(vehiculo.getPlaca())){
 			throw new ParqueaderoErrorBuilderException(CatalogoMensajes.PLACA_INVALIDA_PARA_INGRESO, HttpStatus.NOT_ACCEPTABLE);
 		}
@@ -60,7 +60,7 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 		vehiculo = vehiculoService.getVehiculoAParquear(vehiculo);
 		Parqueadero parqueadero = new Parqueadero(new Date(),null,true,0,vehiculo);
 		
-		parqueaderoService.registrarParqueoVehiculo(parqueadero);
+		return parqueaderoService.registrarParqueoVehiculo(parqueadero);
 	}
 
 	@Override
