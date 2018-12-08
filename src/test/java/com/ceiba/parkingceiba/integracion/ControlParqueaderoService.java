@@ -22,8 +22,6 @@ import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ControlParqueaderoService {
 	
-	private static final String TIPO_VEHICULO_MOTO = "Moto";
-	
 	private static final String TIPO_VEHICULO_AVION = "Avion";
 
 	private static final int CILINDRAJE = 180;
@@ -40,6 +38,6 @@ public class ControlParqueaderoService {
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE).conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
 		ResponseEntity<Parqueadero> parqueadero = restTemplate.postForEntity("http://localhost:"+localServerPort+"/parqueadero/registroEntrada", vehiculo,Parqueadero.class);
 		System.out.println("Puerto: " + localServerPort);
-		assertEquals(HttpStatus.CREATED, parqueadero.getStatusCode());
+		assertEquals(HttpStatus.OK, parqueadero.getStatusCode());
 	}
 }
