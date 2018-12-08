@@ -4,6 +4,5 @@ import com.ceiba.parkingceiba.model.entity.Vehiculo;
 
 public interface IVehiculoService {
 
-	Vehiculo getVehiculoAParquear(Vehiculo vehiculo);
-	
+	public Vehiculo getVehiculoAParquear(Vehiculo vehiculo);
 }

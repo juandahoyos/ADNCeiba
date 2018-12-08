@@ -17,10 +17,8 @@ public class VehiculoServiceImp implements IVehiculoService {
 	@Transactional
 	public Vehiculo getVehiculoAParquear(Vehiculo vehiculo) {
 		if (!vehiculoDao.existsByPlaca(vehiculo.getPlaca())) {
-			vehiculo = vehiculoDao.save(vehiculo);
-		} else {
-			vehiculo = vehiculoDao.findByPlaca(vehiculo.getPlaca());
+			vehiculoDao.save(vehiculo);
 		}
-		return vehiculo;
+		return vehiculoDao.findByPlaca(vehiculo.getPlaca());
 	}
 }

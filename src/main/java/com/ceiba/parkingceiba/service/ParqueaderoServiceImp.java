@@ -18,8 +18,8 @@ public class ParqueaderoServiceImp implements IParqueaderoService{
 	
 	@Override
 	@Transactional
-	public void registrarParqueoVehiculo(Parqueadero parqueadero) {
-		parqueaderoDao.save(parqueadero);
+	public Parqueadero registrarParqueoVehiculo(Parqueadero parqueadero) {
+		return parqueaderoDao.save(parqueadero);
 	}
 
 	@Override
