@@ -40,6 +40,6 @@ public class ControlParqueaderoService {
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE).conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
 		ResponseEntity<Parqueadero> parqueadero = restTemplate.postForEntity("http://localhost:"+localServerPort+"/parqueadero/registroEntrada", vehiculo,Parqueadero.class);
 		System.out.println("Puerto: " + localServerPort);
-		assertEquals(HttpStatus.OK, parqueadero.getStatusCode());
+		assertEquals(HttpStatus.CREATED, parqueadero.getStatusCode());
 	}
 }
