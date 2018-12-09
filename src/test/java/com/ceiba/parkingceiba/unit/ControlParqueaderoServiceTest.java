@@ -5,6 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -58,7 +61,8 @@ public class ControlParqueaderoServiceTest {
 		 control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao)); 
 	}
 
-	private static final String DIA_VALIDO = "";
+	private static final String PLACA = "XCD123";
+	private static final int MAS_HORAS_EN_PARQUEADERO = 11;
 
 	/*@Test
 	public void registrarVehiculoPlacaIniciaPorLetraAYDiaEsDomingoOLunesTest() {
@@ -70,13 +74,13 @@ public class ControlParqueaderoServiceTest {
 			IRestriccionPlaca restriccionPlaca = mock(IRestriccionPlaca.class);
 			VehiculoDao vehiculoDao = mock(VehiculoDao.class);
 			
-			Vehiculo vehiculo = new Vehiculo("ASD471", 0, EnumTipoVehiculo.CARRO);
+			Vehiculo vehiculo = new Vehiculo("AAD101", 0, EnumTipoVehiculo.CARRO);
 
 			//control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao)); 
 			
 			Mockito.doReturn(true).when(restriccionPlaca).validadSiEsDomingoOLunes();
-			Mockito.doReturn(true).when(controlParqueadero).validarPlacaIniciaPorLetraA("ASD471");
-			Mockito.doReturn(false).when(controlParqueadero).buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO);
+			Mockito.doReturn(true).when(controlParqueadero).validarPlacaIniciaPorLetraA("AAD101");
+			Mockito.doReturn(true).when(controlParqueadero).buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO);
 			Mockito.doReturn(false).when(controlParqueadero).buscarVehiculoEstacionado("GGB471");
 			Mockito.doReturn(vehiculo).when(vehiculoService).getVehiculoAParquear(new Vehiculo());
 			Mockito.doReturn(new Parqueadero()).when(parqueaderoService).registrarParqueoVehiculo(new Parqueadero());
@@ -100,7 +104,7 @@ public class ControlParqueaderoServiceTest {
 			e.printStackTrace();
 		}
 	}*/
-
+	
 	@Test
 	public void registrarVehiculoPlacaIniciaPorLetraAYDiaNoEsDomingoOLunesTest() {
 		try {

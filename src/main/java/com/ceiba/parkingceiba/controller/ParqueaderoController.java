@@ -1,5 +1,7 @@
 package com.ceiba.parkingceiba.controller;
 
+import java.util.List;
+
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,14 +51,14 @@ public class ParqueaderoController {
 		return new ResponseEntity<>(parking, HttpStatus.OK);
 	}
 	
-	/*
+	
 	@Produces(MediaType.APPLICATION_JSON)
-	@RequestMapping(value = "/buscarVehiculos", method = RequestMethod.GET)
+	@GetMapping(value = "/buscarVehiculos")
 	public ResponseEntity<Object> findAllVehicleParked() throws ParqueaderoErrorBuilderException {
 		
-		List<Parqueadero> parking = controlParqueaderoService.buscarVehiculos();
+		List<Parqueadero> parking = controlParqueaderoService.consultarTodosLosVehiculos();
 
 		return new ResponseEntity<>(parking, HttpStatus.OK);
 	}
-*/
+
 }
