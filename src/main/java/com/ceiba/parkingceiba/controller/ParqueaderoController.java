@@ -44,21 +44,28 @@ public class ParqueaderoController {
 	
 	@Produces(MediaType.APPLICATION_JSON)
 	@PutMapping(value = "/registroSalida/{placa}")
-	public ResponseEntity<Object> salidaVehiculo(@PathVariable("placa") String placa) throws ParqueaderoErrorBuilderException {
-		
-		Parqueadero parking = controlParqueaderoService.salidaVehiculo(placa);
-
-		return new ResponseEntity<>(parking, HttpStatus.OK);
+	public ResponseEntity<Object> salidaVehiculo(@PathVariable("placa") String placa) {
+		Parqueadero parqueadero;
+		try {
+			parqueadero = controlParqueaderoService.salidaVehiculo(placa);
+		} catch (ParqueaderoErrorBuilderException e) {
+			return new ResponseEntity<>(e, HttpStatus.NOT_ACCEPTABLE);
+		}
+		return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 	}
-	
 	
 	@Produces(MediaType.APPLICATION_JSON)
 	@GetMapping(value = "/buscarVehiculos")
-	public ResponseEntity<Object> findAllVehicleParked() throws ParqueaderoErrorBuilderException {
-		
-		List<Parqueadero> parking = controlParqueaderoService.consultarTodosLosVehiculos();
+	public ResponseEntity<Object> buscarTodosLosVehiculos() {
 
-		return new ResponseEntity<>(parking, HttpStatus.OK);
+		List<Parqueadero> parqueadero;
+		try {
+			parqueadero = controlParqueaderoService.consultarTodosLosVehiculos();
+		} catch (ParqueaderoErrorBuilderException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 	}
 
 }
