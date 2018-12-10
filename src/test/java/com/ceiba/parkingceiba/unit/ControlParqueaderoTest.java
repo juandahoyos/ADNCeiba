@@ -1,7 +1,9 @@
 package com.ceiba.parkingceiba.unit;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ceiba.parkingceiba.domain.IControlParqueadero;
 import com.ceiba.parkingceiba.domain.ICronometroParqueadero;
+import com.ceiba.parkingceiba.domain.imp.CronometroParqueaderoImp;
 import com.ceiba.parkingceiba.domain.imp.TiempoParqueaderoImp;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
@@ -47,6 +50,7 @@ public class ControlParqueaderoTest {
 	private static final int PAGO_ESPERADO_PARA_MOTO = 4000;
 	private static final int CILINDRAJE_MOTO_550CC = 900;
 	private static final int PAGO_ESPERADO_PARA_MOTO_550CC = 6000;
+	private static final int MINUTOS = 1880;
 
 	public boolean respuesta;
 
@@ -212,7 +216,7 @@ public class ControlParqueaderoTest {
 	}
 
 	@Test
-	public void calcularCobroParaMoto550CC() {
+	public void calcularCobroParaMoto550CCTest() {
 		//Arrange
 		IControlParqueadero spyControlParqueadero = Mockito.spy(controlParqueadero);
 		int cobro = 0;
@@ -232,5 +236,15 @@ public class ControlParqueaderoTest {
 
 		//Assert
 		assertEquals(PAGO_ESPERADO_PARA_MOTO_550CC, cobro);
+	}
+	
+	@Test
+	public void obtenerTiempoParqueoTest() {
+		TiempoParqueaderoImp tiempoParqueadero = null;
+		CronometroParqueaderoImp cronometro = new CronometroParqueaderoImp();
+				
+		tiempoParqueadero = cronometro.obtenerTiempoDeParqueo(MINUTOS);
+				
+		assertThat(tiempoParqueadero, instanceOf(TiempoParqueaderoImp.class));
 	}
 }
