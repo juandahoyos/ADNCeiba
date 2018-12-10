@@ -14,6 +14,7 @@ import com.ceiba.parkingceiba.exception.tipos.ParqueaderoErrorBuilderException;
 import com.ceiba.parkingceiba.mensajes.CatalogoMensajes;
 import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
+import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.repository.VehiculoDao;
 
 @Service
@@ -34,15 +35,18 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 	@Autowired
 	public VehiculoDao vehiculoDao;
 	
+	@Autowired
+	public ParqueaderoDao parqueaderoDao;
 	
 	public ControlParqueaderoServiceImp(IControlParqueadero controlParqueadero, IRestriccionPlaca restriccionPlaca,
-			IParqueaderoService parqueaderoService, IVehiculoService vehiculoService, VehiculoDao vehiculoDao) {
+			IParqueaderoService parqueaderoService, IVehiculoService vehiculoService, VehiculoDao vehiculoDao, ParqueaderoDao parqueaderoDao) {
 		super();
 		this.controlParqueadero = controlParqueadero;
 		this.restriccionPlaca = restriccionPlaca;
 		this.parqueaderoService = parqueaderoService;
 		this.vehiculoService = vehiculoService;
 		this.vehiculoDao = vehiculoDao;
+		this.parqueaderoDao = parqueaderoDao;
 	}
 
 	@Override
@@ -65,14 +69,12 @@ public class ControlParqueaderoServiceImp implements IControlParqueaderoService{
 
 	@Override
 	public Parqueadero salidaVehiculo(String placa) throws ParqueaderoErrorBuilderException {
-		if(!controlParqueadero.buscarVehiculoEstacionado(placa)) {
-		throw new ParqueaderoErrorBuilderException(CatalogoMensajes.VEHICULO_NO_ESTA_ESTACIONADO, HttpStatus.NOT_ACCEPTABLE);
-		}
-		
 		Date fechaSalida;
 		int cobro;
 		Parqueadero parqueadero;
-		
+		if(!controlParqueadero.buscarVehiculoEstacionado(placa)) {
+		throw new ParqueaderoErrorBuilderException(CatalogoMensajes.VEHICULO_NO_ESTA_ESTACIONADO, HttpStatus.NOT_ACCEPTABLE);
+		}
 		fechaSalida = Calendar.getInstance().getTime();
 		parqueadero = parqueaderoService.getParqueaderoParaAsignar(placa);
 		cobro = controlParqueadero.generarCobro(parqueadero.getVehiculo().getTipoVehiculo(), parqueadero.getFechaIngreso(), fechaSalida, parqueadero.getVehiculo().getCilindraje());
