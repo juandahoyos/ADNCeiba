@@ -19,7 +19,7 @@ import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.testdatabuilder.VehiculoTestDataBuilder;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
-
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ControlParqueaderoService {
@@ -57,5 +57,5 @@ public class ControlParqueaderoService {
 			System.out.println("Puerto: " + localServerPort);
 			assertEquals(CatalogoMensajes.INGRESO_VEHICULO_DIFERENTE_A_CARRO_O_MOTO,parqueadero.getBody());
 
-	}*/
-}
+	}
+}*/
