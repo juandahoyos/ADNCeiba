@@ -9,6 +9,7 @@ import static org.mockito.Mockito.spy;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.aspectj.weaver.patterns.IVerificationRequired;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -32,6 +33,7 @@ import com.ceiba.parkingceiba.repository.VehiculoDao;
 import com.ceiba.parkingceiba.service.ControlParqueaderoServiceImp;
 import com.ceiba.parkingceiba.service.IParqueaderoService;
 import com.ceiba.parkingceiba.service.IVehiculoService;
+import com.ceiba.parkingceiba.service.VehiculoServiceImp;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 
 
@@ -133,6 +135,22 @@ public class ControlParqueaderoServiceTest {
 		} catch (ParqueaderoErrorBuilderException e) {
 			assertEquals(CatalogoMensajes.VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMensaje());
 		}
-
+	}
+	
+	@Test
+	
+	public void validarIngresovehiculo() {
+		
+		Vehiculo vehiculo = new Vehiculo(PLACA, 0, EnumTipoVehiculo.CARRO);
+		
+		VehiculoServiceImp vehiculoService = new VehiculoServiceImp(vehiculoDao);
+		Mockito.when(vehiculoDao.save(new Vehiculo())).thenReturn(vehiculo);
+		Mockito.when(vehiculoDao.existsByPlaca(PLACA)).thenReturn(false);
+		Mockito.when(vehiculoDao.findByPlaca(PLACA)).thenReturn(vehiculo);
+		
+		Vehiculo vehiculoResponse = vehiculoService.getVehiculoAParquear(vehiculo);
+		
+		assertEquals(vehiculoResponse.getPlaca(), vehiculo.getPlaca()); 
+		
 	}
 }
