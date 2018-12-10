@@ -2,9 +2,6 @@ package com.ceiba.parkingceiba.integracion;
 
 import static org.junit.Assert.assertEquals;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +23,7 @@ public class ControlParqueaderoService {
 
 	private static final int CILINDRAJE = 180;
 
-	private static final String TIPO_VEHICULO_AVION = "Avion";
+	//private static final String TIPO_VEHICULO_AVION = "Avion";
 
 	private static final String PLACA = "XCD123";
 
