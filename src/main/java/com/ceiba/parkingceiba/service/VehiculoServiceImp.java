@@ -12,6 +12,12 @@ public class VehiculoServiceImp implements IVehiculoService {
 
 	@Autowired
 	private VehiculoDao vehiculoDao;
+	
+	
+	public VehiculoServiceImp(VehiculoDao vehiculoDao) {
+		super();
+		this.vehiculoDao = vehiculoDao;
+	}
 
 	@Override
 	@Transactional
