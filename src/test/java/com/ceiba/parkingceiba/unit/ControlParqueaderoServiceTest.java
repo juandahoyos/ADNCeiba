@@ -1,15 +1,10 @@
 package com.ceiba.parkingceiba.unit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import org.aspectj.weaver.patterns.IVerificationRequired;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,7 +21,6 @@ import com.ceiba.parkingceiba.domain.imp.ControlParqueaderoImp;
 import com.ceiba.parkingceiba.domain.imp.RestriccionPlacaImp;
 import com.ceiba.parkingceiba.exception.tipos.ParqueaderoErrorBuilderException;
 import com.ceiba.parkingceiba.mensajes.CatalogoMensajes;
-import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.repository.VehiculoDao;
