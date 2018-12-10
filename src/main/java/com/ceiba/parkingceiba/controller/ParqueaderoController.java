@@ -32,12 +32,13 @@ public class ParqueaderoController {
 	
 	@RequestMapping("/registroEntrada")
 	public ResponseEntity<Object> entradaVehiculo(@RequestBody Vehiculo vehiculo){
+		Parqueadero parqueadero;
 		try {
-			controlParqueaderoService.registroVehiculo(vehiculo);		
+			parqueadero = controlParqueaderoService.registroVehiculo(vehiculo);		
 		} catch (ParqueaderoErrorBuilderException e) {
-			return new ResponseEntity<Object>(e, HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>(e, HttpStatus.NOT_ACCEPTABLE);
 		}
-		return new ResponseEntity<>(vehiculo, HttpStatus.CREATED);
+		return new ResponseEntity<>(parqueadero, HttpStatus.CREATED);
 	}
 
 	

@@ -30,38 +30,38 @@ import com.ceiba.parkingceiba.service.IVehiculoService;
 import com.ceiba.parkingceiba.service.VehiculoServiceImp;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureTestDatabase
 public class ControlParqueaderoServiceTest {
-	
+
 	@Mock
 	public IControlParqueadero controlParqueadero;
-	
+
 	@Mock
 	public IRestriccionPlaca restriccionPlaca;
-	
+
 	@Mock
 	public IParqueaderoService parqueaderoService;
-	
+
 	@Mock
 	public IVehiculoService vehiculoService;
-	
+
 	@Mock
 	public VehiculoDao vehiculoDao;
-	
+
 	@Mock
 	public ParqueaderoDao parqueaderoDao;
-	
+
 	@InjectMocks
 	ControlParqueaderoServiceImp control;
-	
+
 	@org.junit.Before
 	public void inicializarMocks() {
 		MockitoAnnotations.initMocks(this);
-		 control = mock(ControlParqueaderoServiceImp.class); 
-		 control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService, vehiculoService, vehiculoDao, parqueaderoDao)); 
+		control = mock(ControlParqueaderoServiceImp.class);
+		control = spy(new ControlParqueaderoServiceImp(controlParqueadero, restriccionPlaca, parqueaderoService,
+				vehiculoService, vehiculoDao, parqueaderoDao));
 	}
 
 	private static final String PLACA = "XCD123";
@@ -69,24 +69,24 @@ public class ControlParqueaderoServiceTest {
 	@Test
 	public void registrarVehiculoPlacaIniciaPorLetraAYDiaEsDomingoOLunesTest() {
 		try {
-			//Arrange
-			
+			// Arrange
+
 			Vehiculo vehiculo = new Vehiculo();
 			vehiculo.setPlaca(PLACA);
 			IRestriccionPlaca restriccionPlacaImp = Mockito.mock(RestriccionPlacaImp.class);
 			Mockito.when(restriccionPlacaImp.validadSiEsDomingoOLunes()).thenReturn(false);
 			IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
 			Mockito.when(controlParqueaderoImp.validarPlacaIniciaPorLetraA(PLACA)).thenReturn(true);
-			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,restriccionPlacaImp,null,null,null,null);
-			//Act
+			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,
+					restriccionPlacaImp, null, null, null, null);
+			// Act
 			controlParqueadero.registroVehiculo(vehiculo);
 			fail();
 		} catch (ParqueaderoErrorBuilderException e) {
 			assertEquals(CatalogoMensajes.PLACA_INVALIDA_PARA_INGRESO, e.getMensaje());
 		}
 	}
-	
-	
+
 	@Test
 	public void registrarVehiculoValidaEspacioPorTipoVehiculoTest() {
 		try {
@@ -99,8 +99,9 @@ public class ControlParqueaderoServiceTest {
 			IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
 			Mockito.when(controlParqueaderoImp.validarPlacaIniciaPorLetraA(PLACA)).thenReturn(false);
 			Mockito.when(controlParqueaderoImp.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(false);
-			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,restriccionPlacaImp,null,null,null,parqueaderoDao);
-			//Act
+			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,
+					restriccionPlacaImp, null, null, null, parqueaderoDao);
+			// Act
 			controlParqueadero.registroVehiculo(vehiculo);
 			fail();
 		} catch (ParqueaderoErrorBuilderException e) {
@@ -108,7 +109,7 @@ public class ControlParqueaderoServiceTest {
 		}
 
 	}
-	
+
 	@Test
 	public void registrarVehiculoEstacionadoTest() {
 		try {
@@ -122,29 +123,64 @@ public class ControlParqueaderoServiceTest {
 			Mockito.when(controlParqueaderoImp.validarPlacaIniciaPorLetraA(PLACA)).thenReturn(false);
 			Mockito.when(controlParqueaderoImp.buscarEspacioPorTipoVehiculo(EnumTipoVehiculo.CARRO)).thenReturn(true);
 			Mockito.when(controlParqueaderoImp.buscarVehiculoEstacionado(PLACA)).thenReturn(true);
-			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,restriccionPlacaImp,null,null,null,parqueaderoDao);
-			//Act
+			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,
+					restriccionPlacaImp, null, null, null, parqueaderoDao);
+			// Act
 			controlParqueadero.registroVehiculo(vehiculo);
 			fail();
 		} catch (ParqueaderoErrorBuilderException e) {
 			assertEquals(CatalogoMensajes.VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMensaje());
 		}
 	}
-	
+
 	@Test
-	
+
 	public void validarIngresovehiculo() {
-		
+
 		Vehiculo vehiculo = new Vehiculo(PLACA, 0, EnumTipoVehiculo.CARRO);
-		
+
 		VehiculoServiceImp vehiculoService = new VehiculoServiceImp(vehiculoDao);
 		Mockito.when(vehiculoDao.save(new Vehiculo())).thenReturn(vehiculo);
 		Mockito.when(vehiculoDao.existsByPlaca(PLACA)).thenReturn(false);
 		Mockito.when(vehiculoDao.findByPlaca(PLACA)).thenReturn(vehiculo);
-		
+
 		Vehiculo vehiculoResponse = vehiculoService.getVehiculoAParquear(vehiculo);
-		
-		assertEquals(vehiculoResponse.getPlaca(), vehiculo.getPlaca()); 
-		
+
+		assertEquals(vehiculoResponse.getPlaca(), vehiculo.getPlaca());
+
+	}
+
+	@Test
+	public void salidaVehiculoNoEstacionadoTest() {
+		try {
+
+			Vehiculo vehiculo = new Vehiculo();
+			vehiculo.setPlaca(PLACA);
+			vehiculo.setEnumTipoVehiculo(EnumTipoVehiculo.CARRO);
+			IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
+			Mockito.when(controlParqueaderoImp.buscarVehiculoEstacionado(PLACA)).thenReturn(false);
+			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,
+					null, null, null, null, parqueaderoDao);
+			// Act
+			controlParqueadero.salidaVehiculo(vehiculo.getPlaca());
+			fail();
+		} catch (ParqueaderoErrorBuilderException e) {
+			assertEquals(CatalogoMensajes.VEHICULO_NO_ESTA_ESTACIONADO, e.getMensaje());
+		}
+	}
+
+	@Test
+	public void validarParqueaderoVacioTest() {
+		try {
+			IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
+			Mockito.when(controlParqueaderoImp.validarSiPaqueaderoEstaVacio()).thenReturn(true);
+			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,
+					null, null, null, null, parqueaderoDao);
+			// Act
+			controlParqueadero.consultarTodosLosVehiculos();
+			fail();
+		} catch (ParqueaderoErrorBuilderException e) {
+			assertEquals(CatalogoMensajes.PARQUEADERO_ESTA_VACIO, e.getMensaje());
+		}
 	}
 }
