@@ -54,8 +54,8 @@ public class ControlParqueaderoService {
 	
 	@Test
 	public void buscarTodosLosVehiculos() {
-	ResponseEntity<String> parqueadero = restTemplate.getForEntity("http://localhost:"+localServerPort+"/parqueadero/buscarVehiculos",String.class);
+	ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:"+localServerPort+"/parqueadero/buscarVehiculos",String.class);
 	System.out.println("Puerto: " + localServerPort);
-	assertEquals(HttpStatus.NOT_ACCEPTABLE, parqueadero.getStatusCode());
+	assertEquals(HttpStatus.NOT_ACCEPTABLE, responseEntity.getStatusCode());
 	}
 }
