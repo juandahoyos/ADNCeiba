@@ -29,7 +29,6 @@ public class ParqueaderoController {
 		this.controlParqueaderoService = controlParqueaderoService;
 	}
 
-
 	@RequestMapping(value="/registroEntrada")
 	public ResponseEntity<Object> entradaVehiculo(@RequestBody Vehiculo vehiculo){
 		Parqueadero parqueadero;
@@ -41,7 +40,6 @@ public class ParqueaderoController {
 		return new ResponseEntity<>(parqueadero, HttpStatus.CREATED);
 	}
 
-	
 	@RequestMapping(value = "/registroSalida")
 	public ResponseEntity<Object> salidaVehiculo(@RequestBody String placa) {
 		Parqueadero parqueadero;
@@ -55,14 +53,12 @@ public class ParqueaderoController {
 	
 	@GetMapping(value = "/buscarVehiculos")
 	public ResponseEntity<Object> buscarTodosLosVehiculos() {
-
 		List<Parqueadero> parqueadero;
 		try {
 			parqueadero = controlParqueaderoService.consultarTodosLosVehiculos();
 		} catch (ParqueaderoErrorBuilderException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
-
 		return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 	}
 
