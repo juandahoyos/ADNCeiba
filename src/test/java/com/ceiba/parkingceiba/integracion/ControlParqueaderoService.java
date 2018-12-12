@@ -112,7 +112,7 @@ public class ControlParqueaderoService {
 		}
 	}
 
-	@Test
+	/*@Test
 	public void registroSalida() {
 		try {
 			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
