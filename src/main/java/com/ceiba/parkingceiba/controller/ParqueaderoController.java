@@ -41,7 +41,7 @@ public class ParqueaderoController {
 
 	
 	@Produces(MediaType.APPLICATION_JSON)
-	@RequestMapping(value = "/registroSalida/")
+	@RequestMapping(value = "/registroSalida")
 	public ResponseEntity<Object> salidaVehiculo(@RequestBody String placa) {
 		Parqueadero parqueadero;
 		try {
