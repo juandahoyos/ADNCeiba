@@ -2,8 +2,10 @@ package com.ceiba.parkingceiba.integracion;
 
 import static org.junit.Assert.assertEquals;
 
+
 import java.util.Date;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,12 +29,12 @@ import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
 import com.ceiba.parkingceiba.repository.VehiculoDao;
 import com.ceiba.parkingceiba.service.ControlParqueaderoServiceImp;
+import com.ceiba.parkingceiba.service.IControlParqueaderoService;
 import com.ceiba.parkingceiba.service.IParqueaderoService;
 import com.ceiba.parkingceiba.service.IVehiculoService;
 import com.ceiba.parkingceiba.testdatabuilder.ParqueaderoTestDataBuilder;
 import com.ceiba.parkingceiba.testdatabuilder.VehiculoTestDataBuilder;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
-import com.google.gson.Gson;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -45,46 +47,96 @@ public class ControlParqueaderoService {
 	// private static final String TIPO_VEHICULO_AVION = "Avion";
 
 	private static final String PLACA = "XCD123";
+	
 
 	private TestRestTemplate restTemplate = new TestRestTemplate();
 	
-	Gson gson = new Gson();
+	
+	public IControlParqueadero controlParqueadero;
+
+	@Mock
+	public IRestriccionPlaca restriccionPlaca;
+
+	@Mock
+	public IParqueaderoService parqueaderoService;
+
+	@Mock
+	public IVehiculoService vehiculoService;
+
+	@Mock
+	public VehiculoDao vehiculoDao;
+
+	@Mock
+	public ParqueaderoDao parqueaderoDao;
+
+	@Mock
+	ControlParqueaderoServiceImp control;
+	
+	@InjectMocks
+	private ParqueaderoController parqueaderoController;
 	
 	@Mock
-	public ControlParqueaderoServiceImp control;
+	public IControlParqueaderoService controlParqueaderoService;
+	
 	
 	@LocalServerPort
 	private int localServerPort;
 
+
+	@Before
+	public void inicializarMocks() {
+		 parqueaderoController = new ParqueaderoController(controlParqueaderoService);
+	}
+	
 	@Test
 	public void registrarIngreso() {
 		try {
-		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
-				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
-		Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(null)
-				.conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
+			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+					.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+			Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(null)
+					.conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
+			
 			Mockito.when(control.registroVehiculo(vehiculo)).thenReturn(parqueadero);
 			ResponseEntity<Parqueadero> parqueaderoResponse = restTemplate.postForEntity(
-					"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo, Parqueadero.class);
-			// System.out.println("Puerto: " + localServerPort);
+					"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo,
+					Parqueadero.class);
+			
 			assertEquals(HttpStatus.CREATED, parqueaderoResponse.getStatusCode());
+			
 		} catch (ParqueaderoErrorBuilderException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/*@Test
+	@Test
 	public void registroSalida() {
-		ResponseEntity<Parqueadero> parqueadero = restTemplate.postForEntity(
-				"http://localhost:" + localServerPort + "/parqueadero/registroSalida", PLACA, Parqueadero.class);
-		System.out.println("Puerto: " + localServerPort);
-		assertEquals(HttpStatus.OK, parqueadero.getStatusCode());
+		try {
+			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+					.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+			Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(new Date())
+					.conEstado(false).conCobro(3000).conVehiculo(vehiculo).build();
+			Mockito.doReturn(parqueadero).when(control).salidaVehiculo(PLACA);
+			//Mockito.when(control.salidaVehiculo(PLACA)).thenReturn(parqueadero);
+			
+			//IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
+			//Mockito.doReturn(false).when(controlParqueaderoImp).buscarVehiculoEstacionado(PLACA);
+			//Mockito.when(controlParqueaderoImp.buscarVehiculoEstacionado(PLACA)).thenReturn(false);
+			
+			ResponseEntity<Parqueadero> parqueaderoResponse = restTemplate.postForEntity(
+					"http://localhost:" + localServerPort + "/parqueadero/registroSalida", PLACA, Parqueadero.class);
+			System.out.println("Puerto: " + localServerPort);
+			
+			assertEquals(HttpStatus.OK, parqueaderoResponse.getStatusCode());
+			
+		} catch (ParqueaderoErrorBuilderException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	/*@Test
+
+	@Test
 	public void buscarTodosLosVehiculos() {
 	ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:"+localServerPort+"/parqueadero/buscarVehiculos",String.class);
 	System.out.println("Puerto: " + localServerPort);
 	assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	}*/
+	}
 }

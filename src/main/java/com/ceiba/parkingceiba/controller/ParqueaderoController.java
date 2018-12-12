@@ -28,6 +28,11 @@ public class ParqueaderoController {
 	@Autowired
 	private IControlParqueaderoService controlParqueaderoService;
 	
+	public ParqueaderoController(IControlParqueaderoService controlParqueaderoService) {
+		this.controlParqueaderoService = controlParqueaderoService;
+	}
+
+
 	@RequestMapping(value="/registroEntrada")
 	public ResponseEntity<Object> entradaVehiculo(@RequestBody Vehiculo vehiculo){
 		Parqueadero parqueadero;
