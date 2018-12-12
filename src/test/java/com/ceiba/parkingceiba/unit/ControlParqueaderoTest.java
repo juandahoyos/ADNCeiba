@@ -24,7 +24,11 @@ import com.ceiba.parkingceiba.domain.IControlParqueadero;
 import com.ceiba.parkingceiba.domain.ICronometroParqueadero;
 import com.ceiba.parkingceiba.domain.imp.CronometroParqueaderoImp;
 import com.ceiba.parkingceiba.domain.imp.TiempoParqueaderoImp;
+import com.ceiba.parkingceiba.model.entity.Parqueadero;
+import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
+import com.ceiba.parkingceiba.testdatabuilder.ParqueaderoTestDataBuilder;
+import com.ceiba.parkingceiba.testdatabuilder.VehiculoTestDataBuilder;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 import com.ceiba.parkingceiba.util.ParametrosGlobalesParqueadero;
 
@@ -148,6 +152,22 @@ public class ControlParqueaderoTest {
 		respuesta = controlParqueadero.buscarVehiculoEstacionado(PLACA_NO_ESTACIONADA);
 		// Assert
 		assertFalse(respuesta);
+	}
+
+	@Test
+	public void validarVehiculoEnParqueaderoTest() {
+		
+		// Arrange
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA_ESTACIONADA).conCilindraje(CILINDRAJE_MOTO)
+				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+		Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(new Date())
+				.conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
+		
+		Mockito.when(parqueaderoDao.encontrarVehiculoEnParqueaderoPorPlaca(PLACA_ESTACIONADA)).thenReturn(parqueadero);
+		// Act
+		Parqueadero placa = controlParqueadero.getObtenerParqueaderoParaAsignar(PLACA_ESTACIONADA);
+		// Assert
+		assertEquals(placa.getVehiculo().getPlaca(), vehiculo.getPlaca());
 	}
 
 	@Test

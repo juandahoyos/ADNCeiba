@@ -2,7 +2,7 @@ package com.ceiba.parkingceiba.integracion;
 
 import static org.junit.Assert.assertEquals;
 
-
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.Before;
@@ -43,8 +43,6 @@ public class ControlParqueaderoService {
 
 
 	private static final int CILINDRAJE = 180;
-
-	// private static final String TIPO_VEHICULO_AVION = "Avion";
 
 	private static final String PLACA = "XCD123";
 	
@@ -88,6 +86,9 @@ public class ControlParqueaderoService {
 		 parqueaderoController = new ParqueaderoController(controlParqueaderoService);
 	}
 	
+	@Mock
+	private ArrayList<Parqueadero> mockArrayList;
+	
 	@Test
 	public void registrarIngreso() {
 		try {
@@ -107,7 +108,7 @@ public class ControlParqueaderoService {
 			e.printStackTrace();
 		}
 	}
-
+/*
 	@Test
 	public void registroSalida() {
 		try {
@@ -133,10 +134,15 @@ public class ControlParqueaderoService {
 		}
 	}
 
-	@Test
+	/*@Test
 	public void buscarTodosLosVehiculos() {
+		
+		List<Parqueadero> mockList = new ArrayList<>();
+		Mockito.when(parqueaderoService.encontrarTodosLosParqueaderos()).thenReturn(mockList);
+		mockList.addAll(mockArrayList);
+		
 	ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:"+localServerPort+"/parqueadero/buscarVehiculos",String.class);
 	System.out.println("Puerto: " + localServerPort);
 	assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	}
+	}*/
 }
