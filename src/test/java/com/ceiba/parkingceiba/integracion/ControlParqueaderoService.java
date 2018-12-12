@@ -92,16 +92,19 @@ public class ControlParqueaderoService {
 	@Test
 	public void registrarIngreso() {
 		try {
+			//Arrange
 			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
 					.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
 			Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(null)
 					.conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
 			
+			//Act
 			Mockito.when(control.registroVehiculo(vehiculo)).thenReturn(parqueadero);
 			ResponseEntity<Parqueadero> parqueaderoResponse = restTemplate.postForEntity(
 					"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo,
 					Parqueadero.class);
 			
+			//Assert
 			assertEquals(HttpStatus.CREATED, parqueaderoResponse.getStatusCode());
 			
 		} catch (ParqueaderoErrorBuilderException e) {
