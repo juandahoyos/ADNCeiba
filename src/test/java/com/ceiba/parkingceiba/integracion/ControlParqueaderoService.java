@@ -111,7 +111,7 @@ public class ControlParqueaderoService {
 			e.printStackTrace();
 		}
 	}
-/*
+
 	@Test
 	public void registroSalida() {
 		try {

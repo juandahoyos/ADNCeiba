@@ -15,15 +15,7 @@ public class TiempoParqueaderoImp {
 		return dias;
 	}
 
-	public void setDias(int dias) {
-		this.dias = dias;
-	}
-
 	public int getHoras() {
 		return horas;
-	}
-
-	public void setHoras(int horas) {
-		this.horas = horas;
 	}
 }
