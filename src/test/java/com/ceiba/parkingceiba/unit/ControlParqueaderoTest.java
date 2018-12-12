@@ -156,13 +156,13 @@ public class ControlParqueaderoTest {
 
 	@Test
 	public void validarVehiculoEnParqueaderoTest() {
-		
+
 		// Arrange
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA_ESTACIONADA).conCilindraje(CILINDRAJE_MOTO)
 				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
-		Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(new Date())
-				.conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
-		
+		Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date())
+				.conFechaSalida(new Date()).conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
+
 		Mockito.when(parqueaderoDao.encontrarVehiculoEnParqueaderoPorPlaca(PLACA_ESTACIONADA)).thenReturn(parqueadero);
 		// Act
 		Parqueadero placa = controlParqueadero.getObtenerParqueaderoParaAsignar(PLACA_ESTACIONADA);
@@ -172,7 +172,7 @@ public class ControlParqueaderoTest {
 
 	@Test
 	public void calcularCobroTest() {
-		//Arrange
+		// Arrange
 		ICronometroParqueadero cronometroParqueadero = mock(ICronometroParqueadero.class);
 		int cobro = 0;
 
@@ -182,18 +182,18 @@ public class ControlParqueaderoTest {
 		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
-		//Act
+		// Act
 		Mockito.when(cronometroParqueadero.obtenerTiempoDeParqueo(540)).thenReturn(new TiempoParqueaderoImp(1, 1));
 		cobro = controlParqueadero.calcularCobro(fechaIngreso, fechaSalida,
 				ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO);
-		
-		//Assert
+
+		// Assert
 		assertEquals(PAGO_ESPERADO_PARA_CARRO, cobro);
 	}
 
 	@Test
 	public void calcularCobroParaCarroTest() {
-		//Arrange
+		// Arrange
 		IControlParqueadero spycontrolParqueadero = Mockito.spy(controlParqueadero);
 		int cobro = 0;
 
@@ -203,19 +203,19 @@ public class ControlParqueaderoTest {
 		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
-		//Act
+		// Act
 		Mockito.when(spycontrolParqueadero.calcularCobro(fechaIngreso, fechaSalida,
 				ParametrosGlobalesParqueadero.VALOR_DIA_CARRO, ParametrosGlobalesParqueadero.VALOR_HORA_CARRO))
 				.thenReturn(PAGO_ESPERADO_PARA_CARRO);
 		cobro = controlParqueadero.generarCobro(EnumTipoVehiculo.CARRO, fechaIngreso, fechaSalida, CILINDRAJE_CARRO);
 
-		//Assert
+		// Assert
 		assertEquals(PAGO_ESPERADO_PARA_CARRO, cobro);
 	}
 
 	@Test
 	public void calcularCobroParaMotoTest() {
-		//Arrange
+		// Arrange
 		IControlParqueadero spycontrolParqueadero = Mockito.spy(controlParqueadero);
 		int cobro = 0;
 
@@ -225,19 +225,19 @@ public class ControlParqueaderoTest {
 		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
-		//Act
+		// Act
 		Mockito.when(spycontrolParqueadero.calcularCobro(fechaIngreso, fechaSalida,
 				ParametrosGlobalesParqueadero.VALOR_DIA_MOTO, ParametrosGlobalesParqueadero.VALOR_HORA_MOTO))
 				.thenReturn(PAGO_ESPERADO_PARA_MOTO);
 		cobro = controlParqueadero.generarCobro(EnumTipoVehiculo.MOTO, fechaIngreso, fechaSalida, CILINDRAJE_MOTO);
 
-		//Assert
+		// Assert
 		assertEquals(PAGO_ESPERADO_PARA_MOTO, cobro);
 	}
 
 	@Test
 	public void calcularCobroParaMoto550CCTest() {
-		//Arrange
+		// Arrange
 		IControlParqueadero spyControlParqueadero = Mockito.spy(controlParqueadero);
 		int cobro = 0;
 
@@ -247,24 +247,24 @@ public class ControlParqueaderoTest {
 		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
-		//Act
+		// Act
 		Mockito.when(spyControlParqueadero.calcularCobro(fechaIngreso, fechaSalida,
 				ParametrosGlobalesParqueadero.VALOR_DIA_MOTO, ParametrosGlobalesParqueadero.VALOR_HORA_MOTO))
 				.thenReturn(PAGO_ESPERADO_PARA_MOTO_550CC);
 		cobro = controlParqueadero.generarCobro(EnumTipoVehiculo.MOTO, fechaIngreso, fechaSalida,
 				CILINDRAJE_MOTO_550CC);
 
-		//Assert
+		// Assert
 		assertEquals(PAGO_ESPERADO_PARA_MOTO_550CC, cobro);
 	}
-	
+
 	@Test
 	public void obtenerTiempoParqueoTest() {
 		TiempoParqueaderoImp tiempoParqueadero = null;
 		CronometroParqueaderoImp cronometro = new CronometroParqueaderoImp();
-				
+
 		tiempoParqueadero = cronometro.obtenerTiempoDeParqueo(MINUTOS);
-				
+
 		assertThat(tiempoParqueadero, instanceOf(TiempoParqueaderoImp.class));
 	}
 }

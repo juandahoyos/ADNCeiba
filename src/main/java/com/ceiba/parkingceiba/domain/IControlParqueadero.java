@@ -1,7 +1,6 @@
 package com.ceiba.parkingceiba.domain;
 
 import java.util.Date;
-import java.util.List;
 
 import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
