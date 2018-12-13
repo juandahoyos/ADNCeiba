@@ -42,13 +42,14 @@ public class ParqueaderoController {
 
 	@RequestMapping(value = "/registroSalida")
 	public ResponseEntity<Object> salidaVehiculo(@RequestBody String placa) {
-		Parqueadero parqueadero;
+		
 		try {
-			parqueadero = controlParqueaderoService.salidaVehiculo(placa);
+			Parqueadero parqueadero = controlParqueaderoService.salidaVehiculo(placa);
+			return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 		} catch (ParqueaderoErrorBuilderException e) {
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
 		}
-		return new ResponseEntity<>(parqueadero, HttpStatus.OK);
+		
 	}
 	
 	@GetMapping(value = "/buscarVehiculos")
