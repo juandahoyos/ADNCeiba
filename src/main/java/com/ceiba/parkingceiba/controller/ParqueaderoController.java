@@ -1,6 +1,8 @@
 package com.ceiba.parkingceiba.controller;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +49,12 @@ public class ParqueaderoController {
 			Parqueadero parqueadero = controlParqueaderoService.salidaVehiculo(placa);
 			return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 		} catch (ParqueaderoErrorBuilderException e) {
+		
+			Logger l = Logger.getLogger("e.printStackTrace()");
+			l.log(Level.INFO, "Mi mensaje", e);
+			
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
+		
 		}
 		
 	}
