@@ -156,7 +156,6 @@ public class ControlParqueaderoTest {
 
 	@Test
 	public void validarVehiculoEnParqueaderoTest() {
-
 		// Arrange
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA_ESTACIONADA).conCilindraje(CILINDRAJE_MOTO)
 				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();

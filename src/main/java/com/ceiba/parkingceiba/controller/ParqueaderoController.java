@@ -1,7 +1,6 @@
 package com.ceiba.parkingceiba.controller;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,26 +17,25 @@ import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.service.IControlParqueaderoService;
 
-
 @CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/parqueadero")
 public class ParqueaderoController {
-	
+
 	private static final Logger LOGGER = Logger.getLogger("loggerController");
-	
+
 	@Autowired
 	private IControlParqueaderoService controlParqueaderoService;
-	
+
 	public ParqueaderoController(IControlParqueaderoService controlParqueaderoService) {
 		this.controlParqueaderoService = controlParqueaderoService;
 	}
 
-	@RequestMapping(value="/registroEntrada")
-	public ResponseEntity<Object> entradaVehiculo(@RequestBody Vehiculo vehiculo){
+	@RequestMapping(value = "/registroEntrada")
+	public ResponseEntity<Object> entradaVehiculo(@RequestBody Vehiculo vehiculo) {
 		Parqueadero parqueadero;
 		try {
-			parqueadero = controlParqueaderoService.registroVehiculo(vehiculo);		
+			parqueadero = controlParqueaderoService.registroVehiculo(vehiculo);
 		} catch (ParqueaderoErrorBuilderException e) {
 			LOGGER.info(e.getMensaje());
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
@@ -47,18 +45,17 @@ public class ParqueaderoController {
 
 	@RequestMapping(value = "/registroSalida")
 	public ResponseEntity<Object> salidaVehiculo(@RequestBody String placa) {
-		
+
 		try {
 			Parqueadero parqueadero = controlParqueaderoService.salidaVehiculo(placa);
 			return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 		} catch (ParqueaderoErrorBuilderException e) {
 			LOGGER.info(e.getMensaje());
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
-		
+
 		}
-		
 	}
-	
+
 	@GetMapping(value = "/buscarVehiculos")
 	public ResponseEntity<Object> buscarTodosLosVehiculos() {
 		List<Parqueadero> parqueadero;
@@ -70,5 +67,4 @@ public class ParqueaderoController {
 		}
 		return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 	}
-
 }
