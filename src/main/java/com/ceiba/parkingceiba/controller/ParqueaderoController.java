@@ -24,7 +24,7 @@ import com.ceiba.parkingceiba.service.IControlParqueaderoService;
 @RequestMapping("/parqueadero")
 public class ParqueaderoController {
 	
-	private static final Logger logger = Logger.getLogger("loggerController");
+	private static final Logger LOGGER = Logger.getLogger("loggerController");
 	
 	@Autowired
 	private IControlParqueaderoService controlParqueaderoService;
@@ -39,7 +39,7 @@ public class ParqueaderoController {
 		try {
 			parqueadero = controlParqueaderoService.registroVehiculo(vehiculo);		
 		} catch (ParqueaderoErrorBuilderException e) {
-			logger.log(Level.INFO, e.getMensaje(), e);
+			LOGGER.log(Level.INFO, e.getMensaje(), e);
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
 		}
 		return new ResponseEntity<>(parqueadero, HttpStatus.CREATED);
@@ -52,7 +52,7 @@ public class ParqueaderoController {
 			Parqueadero parqueadero = controlParqueaderoService.salidaVehiculo(placa);
 			return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 		} catch (ParqueaderoErrorBuilderException e) {
-			logger.log(Level.INFO, e.getMensaje(), e);
+			LOGGER.log(Level.INFO, e.getMensaje(), e);
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
 		
 		}
@@ -65,7 +65,7 @@ public class ParqueaderoController {
 		try {
 			parqueadero = controlParqueaderoService.consultarTodosLosVehiculos();
 		} catch (ParqueaderoErrorBuilderException e) {
-			logger.log(Level.INFO, e.getMensaje(), e);
+			LOGGER.log(Level.INFO, e.getMensaje(), e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 		return new ResponseEntity<>(parqueadero, HttpStatus.OK);

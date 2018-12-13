@@ -1,18 +1,14 @@
 package com.ceiba.parkingceiba.integracion;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,17 +22,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ceiba.parkingceiba.controller.ParqueaderoController;
 import com.ceiba.parkingceiba.domain.IControlParqueadero;
 import com.ceiba.parkingceiba.domain.IRestriccionPlaca;
-import com.ceiba.parkingceiba.exception.tipos.ParqueaderoErrorBuilderException;
 import com.ceiba.parkingceiba.mensajes.CatalogoMensajes;
 import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
-import com.ceiba.parkingceiba.repository.VehiculoDao;
 import com.ceiba.parkingceiba.service.ControlParqueaderoServiceImp;
 import com.ceiba.parkingceiba.service.IControlParqueaderoService;
 import com.ceiba.parkingceiba.service.IParqueaderoService;
 import com.ceiba.parkingceiba.service.IVehiculoService;
-import com.ceiba.parkingceiba.testdatabuilder.ParqueaderoTestDataBuilder;
 import com.ceiba.parkingceiba.testdatabuilder.VehiculoTestDataBuilder;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 
