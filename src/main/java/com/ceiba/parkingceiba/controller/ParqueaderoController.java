@@ -24,7 +24,7 @@ import com.ceiba.parkingceiba.service.IControlParqueaderoService;
 @RequestMapping("/parqueadero")
 public class ParqueaderoController {
 	
-	private static final Logger LOGGER = Logger.getLogger("loggerController");
+	private static final Logger LOGGER = Logger.getLogger(ParqueaderoController.class.getName());
 	
 	@Autowired
 	private IControlParqueaderoService controlParqueaderoService;
