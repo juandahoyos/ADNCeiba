@@ -6,30 +6,29 @@ import org.junit.Test;
 
 import com.ceiba.parkingceiba.domain.imp.RestriccionPlacaImp;
 
-
 public class RestriccionPlacaTest {
 
 	@Test
 	public void diaHabilParaPlacaQueIniciaPorA() {
-		//Arrange
+		// Arrange
 		RestriccionPlacaImp restriccionPlaca = new RestriccionPlacaImp();
-	
-		//Act
+
+		// Act
 		boolean diaHabil = restriccionPlaca.validadSiEsDomingoOLunes();
-		
-		//Assert
+
+		// Assert
 		assertNotNull(diaHabil);
 	}
-	
+
 	@Test
 	public void diaNoHabilParaPlacaQueIniciaPorA() {
-		//Arrange
+		// Arrange
 		RestriccionPlacaImp restriccionPlaca = new RestriccionPlacaImp();
-		
-		//Act
+
+		// Act
 		boolean diaHabil = restriccionPlaca.validadSiEsDomingoOLunes();
-		
-		//Assert
+
+		// Assert
 		assertNotNull(diaHabil);
 	}
 }
