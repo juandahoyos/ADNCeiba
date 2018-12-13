@@ -8,19 +8,16 @@ public class ParqueaderoErrorBuilderException extends Exception{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private final String mensaje;
 	private final HttpStatus httpStatus;
 	
 	
 	public ParqueaderoErrorBuilderException(String mensaje, HttpStatus httpStatus) {
-		super();
-		this.mensaje = mensaje;
+		super(mensaje);
 		this.httpStatus = httpStatus;
 	}
 
 	public String getMensaje() {
-		return mensaje;
+		return this.getMessage();
 	}
 
 	public HttpStatus getHttpStatus() {

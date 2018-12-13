@@ -1,8 +1,11 @@
 package com.ceiba.parkingceiba.integracion;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -171,6 +174,34 @@ public class ControlParqueaderoService {
 
 			System.out.println("registroSalida");
 			assertEquals(CatalogoMensajes.VEHICULO_NO_ESTA_ESTACIONADO, parqueaderoResponse.getBody());
+	}
+	
+	
+	@Test
+	public void consultarVehiculosTest() {
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+
+			restTemplate.postForEntity(
+					"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo, Parqueadero.class);
+			System.out.println("Puerto: " + localServerPort);
+			
+			ResponseEntity<List> parqueaderoResponse = restTemplate.getForEntity(
+					"http://localhost:" + localServerPort + "/parqueadero/buscarVehiculos", List.class);
+			System.out.println("Puerto: " + localServerPort);
+
+			System.out.println("registroSalida");
+			assertFalse(parqueaderoResponse.getBody().isEmpty());
+	}
+	
+	@Test
+	public void consultarVehiculosVacioTest() {
+			ResponseEntity<String> parqueaderoResponse = restTemplate.getForEntity(
+					"http://localhost:" + localServerPort + "/parqueadero/buscarVehiculos", String.class);
+			System.out.println("Puerto: " + localServerPort);
+
+			System.out.println("registroSalida");
+			assertEquals(CatalogoMensajes.PARQUEADERO_ESTA_VACIO,parqueaderoResponse.getBody());
 	}
 	
 
