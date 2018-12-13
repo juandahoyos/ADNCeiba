@@ -1,6 +1,7 @@
 package com.ceiba.parkingceiba.integracion;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -24,6 +27,7 @@ import com.ceiba.parkingceiba.controller.ParqueaderoController;
 import com.ceiba.parkingceiba.domain.IControlParqueadero;
 import com.ceiba.parkingceiba.domain.IRestriccionPlaca;
 import com.ceiba.parkingceiba.exception.tipos.ParqueaderoErrorBuilderException;
+import com.ceiba.parkingceiba.mensajes.CatalogoMensajes;
 import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
 import com.ceiba.parkingceiba.repository.ParqueaderoDao;
@@ -61,10 +65,7 @@ public class ControlParqueaderoService {
 	@Mock
 	public IVehiculoService vehiculoService;
 
-	@Mock
-	public VehiculoDao vehiculoDao;
-
-	@Mock
+	@Autowired
 	public ParqueaderoDao parqueaderoDao;
 
 	@Mock
@@ -76,14 +77,16 @@ public class ControlParqueaderoService {
 	@Mock
 	public IControlParqueaderoService controlParqueaderoService;
 	
+	ControlParqueaderoServiceImp controlSpy;
+	
 	
 	@LocalServerPort
 	private int localServerPort;
 
-
 	@Before
 	public void inicializarMocks() {
 		 parqueaderoController = new ParqueaderoController(controlParqueaderoService);
+		 parqueaderoDao.deleteAll();
 	}
 	
 	@Mock
@@ -91,51 +94,93 @@ public class ControlParqueaderoService {
 	
 	@Test
 	public void registrarIngreso() {
-		try {
-			//Arrange
-			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
-					.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
-			Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(null)
-					.conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
-			
-			//Act
-			Mockito.when(control.registroVehiculo(vehiculo)).thenReturn(parqueadero);
-			ResponseEntity<Parqueadero> parqueaderoResponse = restTemplate.postForEntity(
-					"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo,
-					Parqueadero.class);
-			
-			//Assert
-			assertEquals(HttpStatus.CREATED, parqueaderoResponse.getStatusCode());
-			
-		} catch (ParqueaderoErrorBuilderException e) {
-			e.printStackTrace();
-		}
+		//Arrange
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+		/*
+		Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(null)
+				.conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
+		
+		//Act
+		Mockito.doReturn(parqueadero).when(controlSpy).registroVehiculo(vehiculo);*/
+		//Mockito.when(control.registroVehiculo(vehiculo)).thenReturn(parqueadero);
+		ResponseEntity<Parqueadero> parqueaderoResponse = restTemplate.postForEntity(
+				"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo,
+				Parqueadero.class);
+		
+		//Assert
+		assertEquals(HttpStatus.CREATED, parqueaderoResponse.getStatusCode());
 	}
 
-	/*@Test
+	@Test
 	public void registroSalida() {
-		try {
-			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
-					.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
-			Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(new Date())
-					.conEstado(false).conCobro(3000).conVehiculo(vehiculo).build();
-			Mockito.doReturn(parqueadero).when(control).salidaVehiculo(PLACA);
-			//Mockito.when(control.salidaVehiculo(PLACA)).thenReturn(parqueadero);
-			
-			//IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
-			//Mockito.doReturn(false).when(controlParqueaderoImp).buscarVehiculoEstacionado(PLACA);
-			//Mockito.when(controlParqueaderoImp.buscarVehiculoEstacionado(PLACA)).thenReturn(false);
-			
-			ResponseEntity<Parqueadero> parqueaderoResponse = restTemplate.postForEntity(
-					"http://localhost:" + localServerPort + "/parqueadero/registroSalida", PLACA, Parqueadero.class);
-			System.out.println("Puerto: " + localServerPort);
-			
-			assertEquals(HttpStatus.OK, parqueaderoResponse.getStatusCode());
-			
-		} catch (ParqueaderoErrorBuilderException e) {
-			e.printStackTrace();
-		}
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+		/*Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(new Date())
+				.conEstado(false).conCobro(3000).conVehiculo(vehiculo).build();
+		Mockito.doReturn(parqueadero).when(controlSpy).salidaVehiculo(PLACA);*/
+		//Mockito.when(control.salidaVehiculo(PLACA)).thenReturn(parqueadero);
+		
+		//IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
+		//Mockito.doReturn(false).when(controlParqueaderoImp).buscarVehiculoEstacionado(PLACA);
+		//Mockito.when(controlParqueaderoImp.buscarVehiculoEstacionado(PLACA)).thenReturn(false);
+		
+		restTemplate.postForEntity(
+				"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo,
+				Parqueadero.class);
+		
+		ResponseEntity<Parqueadero> parqueaderoResponse = restTemplate.postForEntity(
+				"http://localhost:" + localServerPort + "/parqueadero/registroSalida", PLACA, Parqueadero.class);
+		System.out.println("Puerto: " + localServerPort);
+		
+		assertEquals(HttpStatus.OK, parqueaderoResponse.getStatusCode());
 	}
+	
+	
+	@Test
+	public void registroIngresoErrorTest() {
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+		/*Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(new Date())
+				.conEstado(false).conCobro(3000).conVehiculo(vehiculo).build();
+		Mockito.doReturn(parqueadero).when(controlSpy).salidaVehiculo(PLACA);*/
+		//Mockito.when(control.salidaVehiculo(PLACA)).thenReturn(parqueadero);
+		
+		//IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
+		//Mockito.doReturn(false).when(controlParqueaderoImp).buscarVehiculoEstacionado(PLACA);
+		restTemplate.postForEntity(
+				"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo, Parqueadero.class);
+		System.out.println("Puerto: " + localServerPort);
+		
+		ResponseEntity<String> parqueaderoResponse = restTemplate.postForEntity(
+				"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo, String.class);
+		System.out.println("Puerto: " + localServerPort);
+
+		System.out.println("registroIngreso");
+		assertEquals(CatalogoMensajes.VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, parqueaderoResponse.getBody());
+
+	}
+	
+	@Test
+	public void registroSalidaErrorTest() {
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+		/*Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date()).conFechaSalida(new Date())
+				.conEstado(false).conCobro(3000).conVehiculo(vehiculo).build();
+		Mockito.doReturn(parqueadero).when(controlSpy).salidaVehiculo(PLACA);*/
+		//Mockito.when(control.salidaVehiculo(PLACA)).thenReturn(parqueadero);
+		
+		//IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
+		//Mockito.doReturn(false).when(controlParqueaderoImp).buscarVehiculoEstacionado(PLACA);
+		ResponseEntity<String> parqueaderoResponse = restTemplate.postForEntity(
+					"http://localhost:" + localServerPort + "/parqueadero/registroSalida", vehiculo.getPlaca(), String.class);
+			System.out.println("Puerto: " + localServerPort);
+
+			System.out.println("registroSalida");
+			assertEquals(CatalogoMensajes.VEHICULO_NO_ESTA_ESTACIONADO, parqueaderoResponse.getBody());
+	}
+	
+
 
 	/*@Test
 	public void buscarTodosLosVehiculos() {

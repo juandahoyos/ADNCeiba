@@ -23,9 +23,7 @@ public class ParqueaderoErrorBuilderException extends Exception{
 		return mensaje;
 	}
 
-
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
 	}
-	
 }
