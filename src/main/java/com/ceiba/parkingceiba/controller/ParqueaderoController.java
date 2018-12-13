@@ -38,7 +38,7 @@ public class ParqueaderoController {
 		try {
 			parqueadero = controlParqueaderoService.registroVehiculo(vehiculo);
 		} catch (ParqueaderoErrorBuilderException e) {
-			LOGGER.log(Level.INFO, e.getMensaje(),e);
+			LOGGER.log(Level.INFO, e.getMensaje(), e);
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
 		}
 		return new ResponseEntity<>(parqueadero, HttpStatus.CREATED);
@@ -51,7 +51,7 @@ public class ParqueaderoController {
 			Parqueadero parqueadero = controlParqueaderoService.salidaVehiculo(placa);
 			return new ResponseEntity<>(parqueadero, HttpStatus.OK);
 		} catch (ParqueaderoErrorBuilderException e) {
-			LOGGER.info(e.getMensaje());
+			LOGGER.log(Level.INFO, e.getMensaje(), e);
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
 
 		}
@@ -63,7 +63,7 @@ public class ParqueaderoController {
 		try {
 			parqueadero = controlParqueaderoService.consultarTodosLosVehiculos();
 		} catch (ParqueaderoErrorBuilderException e) {
-			LOGGER.info(e.getMensaje());
+			LOGGER.log(Level.INFO, e.getMensaje(), e);
 			return new ResponseEntity<>(e.getMensaje(), HttpStatus.NOT_ACCEPTABLE);
 		}
 		return new ResponseEntity<>(parqueadero, HttpStatus.OK);
