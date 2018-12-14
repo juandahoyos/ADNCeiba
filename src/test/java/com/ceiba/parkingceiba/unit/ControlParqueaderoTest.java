@@ -47,7 +47,7 @@ public class ControlParqueaderoTest {
 	private static final String PLACA_ESTACIONADA = "TSG541";
 	private static final String PLACA_NO_ESTACIONADA = "PLJ458";
 
-	private static final int MAS_HORAS_EN_PARQUEADERO = 11;
+	private static final int HORAS_EN_PARQUEADERO = 11;
 	private static final int CILINDRAJE_CARRO = 1200;
 	private static final int PAGO_ESPERADO_PARA_CARRO = 8000;
 	private static final int CILINDRAJE_MOTO = 125;
@@ -178,7 +178,7 @@ public class ControlParqueaderoTest {
 		Calendar calendar = Calendar.getInstance();
 		Date fechaIngreso = calendar.getTime();
 
-		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
+		calendar.add(Calendar.HOUR, HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
 		// Act
@@ -199,7 +199,7 @@ public class ControlParqueaderoTest {
 		Calendar calendar = Calendar.getInstance();
 		Date fechaIngreso = calendar.getTime();
 
-		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
+		calendar.add(Calendar.HOUR, HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
 		// Act
@@ -221,7 +221,7 @@ public class ControlParqueaderoTest {
 		Calendar calendar = Calendar.getInstance();
 		Date fechaIngreso = calendar.getTime();
 
-		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
+		calendar.add(Calendar.HOUR, HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
 		// Act
@@ -243,7 +243,7 @@ public class ControlParqueaderoTest {
 		Calendar calendar = Calendar.getInstance();
 		Date fechaIngreso = calendar.getTime();
 
-		calendar.add(Calendar.HOUR, MAS_HORAS_EN_PARQUEADERO);
+		calendar.add(Calendar.HOUR, HORAS_EN_PARQUEADERO);
 		Date fechaSalida = calendar.getTime();
 
 		// Act
