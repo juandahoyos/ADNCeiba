@@ -82,7 +82,9 @@ public class ControlParqueaderoServiceTest {
 			// Act
 			controlParqueadero.registroVehiculo(vehiculo);
 			fail();
+
 		} catch (ParqueaderoErrorBuilderException e) {
+			// Assert
 			assertEquals(CatalogoMensajes.PLACA_INVALIDA_PARA_INGRESO, e.getMensaje());
 		}
 	}
@@ -105,6 +107,7 @@ public class ControlParqueaderoServiceTest {
 			controlParqueadero.registroVehiculo(vehiculo);
 			fail();
 		} catch (ParqueaderoErrorBuilderException e) {
+			// Assert
 			assertEquals(CatalogoMensajes.NO_HAY_ESPACIO_PARA_EL_TIPO_DE_VEHICULO, e.getMensaje());
 		}
 
@@ -113,7 +116,7 @@ public class ControlParqueaderoServiceTest {
 	@Test
 	public void registrarVehiculoEstacionadoTest() {
 		try {
-
+			// Arrange
 			Vehiculo vehiculo = new Vehiculo();
 			vehiculo.setPlaca(PLACA);
 			vehiculo.setEnumTipoVehiculo(EnumTipoVehiculo.CARRO);
@@ -129,6 +132,7 @@ public class ControlParqueaderoServiceTest {
 			controlParqueadero.registroVehiculo(vehiculo);
 			fail();
 		} catch (ParqueaderoErrorBuilderException e) {
+			// Assert
 			assertEquals(CatalogoMensajes.VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMensaje());
 		}
 	}
@@ -136,24 +140,23 @@ public class ControlParqueaderoServiceTest {
 	@Test
 
 	public void validarIngresovehiculo() {
-
+		// Arrange
 		Vehiculo vehiculo = new Vehiculo(PLACA, 0, EnumTipoVehiculo.CARRO);
 
 		VehiculoServiceImp vehiculoService = new VehiculoServiceImp(vehiculoDao);
 		Mockito.when(vehiculoDao.save(new Vehiculo())).thenReturn(vehiculo);
 		Mockito.when(vehiculoDao.existsByPlaca(PLACA)).thenReturn(false);
 		Mockito.when(vehiculoDao.findByPlaca(PLACA)).thenReturn(vehiculo);
-
+		// Act
 		Vehiculo vehiculoResponse = vehiculoService.getVehiculoAParquear(vehiculo);
-
+		// Assert
 		assertEquals(vehiculoResponse.getPlaca(), vehiculo.getPlaca());
-
 	}
 
 	@Test
 	public void salidaVehiculoNoEstacionadoTest() {
 		try {
-
+			// Arrange
 			Vehiculo vehiculo = new Vehiculo();
 			vehiculo.setPlaca(PLACA);
 			vehiculo.setEnumTipoVehiculo(EnumTipoVehiculo.CARRO);
@@ -165,6 +168,7 @@ public class ControlParqueaderoServiceTest {
 			controlParqueadero.salidaVehiculo(vehiculo.getPlaca());
 			fail();
 		} catch (ParqueaderoErrorBuilderException e) {
+			// Assert
 			assertEquals(CatalogoMensajes.VEHICULO_NO_ESTA_ESTACIONADO, e.getMensaje());
 		}
 	}
@@ -172,6 +176,7 @@ public class ControlParqueaderoServiceTest {
 	@Test
 	public void validarParqueaderoVacioTest() {
 		try {
+			// Arrange
 			IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
 			Mockito.when(controlParqueaderoImp.validarSiPaqueaderoEstaVacio()).thenReturn(true);
 			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,
@@ -180,6 +185,7 @@ public class ControlParqueaderoServiceTest {
 			controlParqueadero.consultarTodosLosVehiculos();
 			fail();
 		} catch (ParqueaderoErrorBuilderException e) {
+			// Assert
 			assertEquals(CatalogoMensajes.PARQUEADERO_ESTA_VACIO, e.getMensaje());
 		}
 	}
