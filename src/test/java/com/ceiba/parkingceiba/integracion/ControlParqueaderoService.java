@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.ceiba.parkingceiba.domain.imp.RestriccionPlacaImp;
+import com.ceiba.parkingceiba.exception.tipos.ParqueaderoErrorBuilderException;
 import com.ceiba.parkingceiba.mensajes.CatalogoMensajes;
 import com.ceiba.parkingceiba.model.entity.Parqueadero;
 import com.ceiba.parkingceiba.model.entity.Vehiculo;
@@ -33,6 +37,7 @@ public class ControlParqueaderoService {
 	private static final int CILINDRAJE = 180;
 
 	private static final String PLACA = "XCD123";
+	private static final String PLACA_INICIA_CON_A = "AAD547";
 
 	private TestRestTemplate restTemplate = new TestRestTemplate();
 
@@ -45,6 +50,25 @@ public class ControlParqueaderoService {
 	@Before
 	public void inicializarMocks() {
 		parqueaderoDao.deleteAll();
+	}
+
+	@Spy
+	RestriccionPlacaImp restriccion = new RestriccionPlacaImp();
+
+	@Test
+	public void ingresoVehiculoPlacaIniciaConAYDiaNoEsHabilParaIngresoTest() throws ParqueaderoErrorBuilderException {
+		// Arrange
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA_INICIA_CON_A).conCilindraje(CILINDRAJE)
+				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
+
+		Mockito.doReturn(false).when(restriccion).validadSiEsDomingoOLunes();
+
+		// Act
+		ResponseEntity<String> parqueaderoResponse = restTemplate.postForEntity(
+				"http://localhost:" + localServerPort + "/parqueadero/registroEntrada", vehiculo, String.class);
+
+		// Assert
+		assertEquals(HttpStatus.NOT_ACCEPTABLE, parqueaderoResponse.getStatusCode());
 	}
 
 	@Test
