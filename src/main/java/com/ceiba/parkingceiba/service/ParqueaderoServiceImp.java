@@ -24,7 +24,7 @@ public class ParqueaderoServiceImp implements IParqueaderoService{
 
 	@Override
 	public Parqueadero getParqueaderoParaAsignar(String placa) {
-		return parqueaderoDao.encontrarVehiculoEnParqueaderoPorPlaca(placa);
+		return parqueaderoDao.buscarVehiculoEnParqueaderoPorPlaca(placa);
 	}
 
 	@Override

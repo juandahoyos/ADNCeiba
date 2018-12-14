@@ -162,9 +162,9 @@ public class ControlParqueaderoTest {
 		Parqueadero parqueadero = new ParqueaderoTestDataBuilder().conFechaIngreso(new Date())
 				.conFechaSalida(new Date()).conEstado(true).conCobro(0).conVehiculo(vehiculo).build();
 
-		Mockito.when(parqueaderoDao.encontrarVehiculoEnParqueaderoPorPlaca(PLACA_ESTACIONADA)).thenReturn(parqueadero);
+		Mockito.when(parqueaderoDao.buscarVehiculoEnParqueaderoPorPlaca(PLACA_ESTACIONADA)).thenReturn(parqueadero);
 		// Act
-		Parqueadero placa = controlParqueadero.getObtenerParqueaderoParaAsignar(PLACA_ESTACIONADA);
+		Parqueadero placa = controlParqueadero.getParqueaderoParaAsignar(PLACA_ESTACIONADA);
 		// Assert
 		assertEquals(placa.getVehiculo().getPlaca(), vehiculo.getPlaca());
 	}
