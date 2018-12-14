@@ -28,6 +28,7 @@ import com.ceiba.parkingceiba.service.ControlParqueaderoServiceImp;
 import com.ceiba.parkingceiba.service.IParqueaderoService;
 import com.ceiba.parkingceiba.service.IVehiculoService;
 import com.ceiba.parkingceiba.service.VehiculoServiceImp;
+import com.ceiba.parkingceiba.testdatabuilder.VehiculoTestDataBuilder;
 import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 
 @RunWith(SpringRunner.class)
@@ -65,14 +66,15 @@ public class ControlParqueaderoServiceTest {
 	}
 
 	private static final String PLACA = "XCD123";
+	private static final int CILINDRAJE = 1600;
 
 	@Test
-	public void registrarVehiculoPlacaIniciaPorLetraAYDiaEsDomingoOLunesTest() {
+	public void registrarVehiculoPlacaIniciaPorLetraAYDiaNoEsDomingoOLunesTest() {
 		try {
 			// Arrange
+			
+			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).build();
 
-			Vehiculo vehiculo = new Vehiculo();
-			vehiculo.setPlaca(PLACA);
 			IRestriccionPlaca restriccionPlacaImp = Mockito.mock(RestriccionPlacaImp.class);
 			Mockito.when(restriccionPlacaImp.validadSiEsDomingoOLunes()).thenReturn(false);
 			IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
@@ -93,8 +95,7 @@ public class ControlParqueaderoServiceTest {
 	public void registrarVehiculoValidaEspacioPorTipoVehiculoTest() {
 		try {
 
-			Vehiculo vehiculo = new Vehiculo();
-			vehiculo.setPlaca(PLACA);
+			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).build();
 			vehiculo.setEnumTipoVehiculo(EnumTipoVehiculo.CARRO);
 			IRestriccionPlaca restriccionPlacaImp = Mockito.mock(RestriccionPlacaImp.class);
 			Mockito.when(restriccionPlacaImp.validadSiEsDomingoOLunes()).thenReturn(false);
@@ -117,8 +118,7 @@ public class ControlParqueaderoServiceTest {
 	public void registrarVehiculoEstacionadoTest() {
 		try {
 			// Arrange
-			Vehiculo vehiculo = new Vehiculo();
-			vehiculo.setPlaca(PLACA);
+			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).build();
 			vehiculo.setEnumTipoVehiculo(EnumTipoVehiculo.CARRO);
 			IRestriccionPlaca restriccionPlacaImp = Mockito.mock(RestriccionPlacaImp.class);
 			Mockito.when(restriccionPlacaImp.validadSiEsDomingoOLunes()).thenReturn(false);
@@ -139,9 +139,10 @@ public class ControlParqueaderoServiceTest {
 
 	@Test
 
-	public void validarIngresovehiculo() {
+	public void validarIngresoVehiculoTest() {
 		// Arrange
-		Vehiculo vehiculo = new Vehiculo(PLACA, 0, EnumTipoVehiculo.CARRO);
+		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conCilindraje(CILINDRAJE)
+				.conTipoVehiculo(EnumTipoVehiculo.CARRO).build();
 
 		VehiculoServiceImp vehiculoService = new VehiculoServiceImp(vehiculoDao);
 		Mockito.when(vehiculoDao.save(new Vehiculo())).thenReturn(vehiculo);
@@ -157,9 +158,7 @@ public class ControlParqueaderoServiceTest {
 	public void salidaVehiculoNoEstacionadoTest() {
 		try {
 			// Arrange
-			Vehiculo vehiculo = new Vehiculo();
-			vehiculo.setPlaca(PLACA);
-			vehiculo.setEnumTipoVehiculo(EnumTipoVehiculo.CARRO);
+			Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA).conTipoVehiculo(EnumTipoVehiculo.CARRO).build();
 			IControlParqueadero controlParqueaderoImp = Mockito.mock(ControlParqueaderoImp.class);
 			Mockito.when(controlParqueaderoImp.buscarVehiculoEstacionado(PLACA)).thenReturn(false);
 			ControlParqueaderoServiceImp controlParqueadero = new ControlParqueaderoServiceImp(controlParqueaderoImp,

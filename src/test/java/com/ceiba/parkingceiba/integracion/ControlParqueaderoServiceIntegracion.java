@@ -32,7 +32,7 @@ import com.ceiba.parkingceiba.util.EnumTipoVehiculo;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
-public class ControlParqueaderoService {
+public class ControlParqueaderoServiceIntegracion {
 
 	private static final int CILINDRAJE = 180;
 
@@ -56,7 +56,7 @@ public class ControlParqueaderoService {
 	RestriccionPlacaImp restriccion = new RestriccionPlacaImp();
 
 	@Test
-	public void ingresoVehiculoPlacaIniciaConAYDiaNoEsHabilParaIngresoTest() throws ParqueaderoErrorBuilderException {
+	public void ingresoVehiculoPlacaIniciaConAYDiaNoEsHabilParaIngresoTest() {
 		// Arrange
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().conPlaca(PLACA_INICIA_CON_A).conCilindraje(CILINDRAJE)
 				.conTipoVehiculo(EnumTipoVehiculo.MOTO).build();
