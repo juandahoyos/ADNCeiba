@@ -12,7 +12,7 @@ public interface IControlParqueadero {
 	public boolean buscarVehiculoEstacionado(String placa);
 	public boolean validarSiPaqueaderoEstaVacio();
 	
-	public Parqueadero getObtenerParqueaderoParaAsignar(String placa);
+	public Parqueadero getParqueaderoParaAsignar(String placa);
 	public int generarCobro (EnumTipoVehiculo tipoVehiculo, Date fechaIngreso, Date fechaSalida, int cilindraje);
 	public int calcularCobro(Date fechaIngreso, Date fechaSalida, int valorDia, int valorHora);
 }
